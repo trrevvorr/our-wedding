@@ -108,7 +108,7 @@ button {
 
 /* #region right */
 .right {
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding: 0 2rem 2rem 2rem;
 	text-align: center;
 }
