@@ -1,0 +1,126 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #AFB3A5;
+	background-color: #819DA0;
+	background-color: #66454E;
+	background-color: #360B15;
+	background-color: #EAE4D4;
+}
+
+/* #region shared */
+
+h1,h2 {
+	font-family: 'Dancing Script', cursive;
+	color: #360B15;
+}
+
+p {
+	color: #360B15;
+	font-family: 'Hind Madurai', sans-serif;
+}
+
+button {
+	padding: 1rem 2rem;
+	font-size: 1rem;
+	line-height: 1rem;
+	background-color: transparent;
+	border: 1px solid #360B15;
+	border-radius: 3rem;
+	color: #360B15;
+}
+
+/* #endregion */
+
+/* #region content */
+.content {
+	display: grid;
+	grid-template-rows: 100vh 1fr;
+	grid-template-columns: auto;
+}
+
+@media (min-width: 800px) {
+	.content {
+		grid-template-rows: 100vh;
+		grid-template-columns: 2fr 1fr;
+		height: 100vh;
+	}
+}
+
+/* #region nav-bar */
+
+.left {
+	background-image: url("images/main.jpg");
+	background-repeat: no-repeat;
+	background-size:cover;
+	overflow: hidden;
+}
+
+.overlay {
+	display: grid;
+	grid-template-rows: 2rem calc(100vh - 2rem);
+	grid-template-columns: 100%;
+	background-color: #360B1560;
+	height: 100%;
+}
+
+.nav-bar {
+	text-align: center;
+}
+
+.nav-bar .links {
+	margin: auto;
+}
+
+.nav-bar a {
+	display: inline-block;
+	color: #EAE4D4;
+	font-family: 'Hind Madurai', sans-serif;
+	text-decoration: none;
+	font-size: 1rem;
+	padding: 1rem 3vw;
+}
+
+.header {
+	text-align: center;
+	margin: auto;
+}
+
+.header .text {
+	font-size: 6rem;
+	color: #EAE4D4;
+}
+/* #endregion */
+
+/* #region heading */
+.photo {
+	grid-area: photo;
+	width: 100%;
+	overflow: hidden;
+}
+.main-photo {
+	width: 100%;
+	/* height: 100%; */
+}
+
+/* #endregion */
+
+.right {
+	overflow-y: scroll;
+	padding: 0 2rem;
+	text-align: center;
+}
+
+.section {
+	margin-top: 4rem;
+}
+
+.section h2 {
+	font-size: 2rem;
+}
+
+.section p {
+	line-height: 1.75rem;
+}
+
+/* #endregion */
