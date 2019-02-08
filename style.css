@@ -28,6 +28,7 @@ button {
 	border: 1px solid #360B15;
 	border-radius: 3rem;
 	color: #360B15;
+	cursor: pointer;
 }
 
 /* #endregion */
@@ -105,9 +106,10 @@ button {
 
 /* #endregion */
 
+/* #region right */
 .right {
 	overflow-y: scroll;
-	padding: 0 2rem;
+	padding: 0 2rem 2rem 2rem;
 	text-align: center;
 }
 
@@ -123,4 +125,36 @@ button {
 	line-height: 1.75rem;
 }
 
+/* #region right */
+.photos img {
+	max-width: 45%;
+	border: 5px solid white;
+}
+
+.photos img.landscape {
+	max-width: 93%;
+}
+
+.drop-shaddow {
+	-webkit-box-shadow: 6px 6px 6px -6px #777;
+	-moz-box-shadow: 6px 6px 6px -6px #777;
+	box-shadow: 6px 6px 6px -6px #777;
+}
+
+.drop-shaddow:hover {
+	-webkit-box-shadow: 10px 10px 10px -10px #777;
+       -moz-box-shadow: 10px 10px 10px -10px #777;
+            box-shadow: 10px 10px 10px -10px #777;
+}
+
+
+/* #endregion */
+
+.registry img {
+	background-color: white;
+	padding: 1rem;
+	max-width: 45%;
+}
+
+/* #endregion */
 /* #endregion */
