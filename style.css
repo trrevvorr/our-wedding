@@ -141,17 +141,17 @@ button {
 	max-width: 93%;
 }
 
-.photos a {
+a.image-link {
 	text-decoration: none;
 }
 
-.drop-shaddow {
+img.image-link {
 	-webkit-box-shadow: 6px 6px 6px -6px #777;
 	-moz-box-shadow: 6px 6px 6px -6px #777;
 	box-shadow: 6px 6px 6px -6px #777;
 }
 
-.drop-shaddow:hover {
+img.image-link:hover {
 	-webkit-box-shadow: 10px 10px 10px -10px #777;
 	-moz-box-shadow: 10px 10px 10px -10px #777;
 	box-shadow: 10px 10px 10px -10px #777;
