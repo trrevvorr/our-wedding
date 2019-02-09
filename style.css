@@ -32,6 +32,40 @@ button {
 	cursor: pointer;
 }
 
+.note {
+	font-style: italic;
+}
+
+/* #region image-link */
+
+a.image-link {
+	text-decoration: none;
+}
+
+img.image-link {
+	max-width: 45%;
+	background-color: white;
+	padding: 0.25rem;
+}
+
+img.image-link.landscape {
+	max-width: 93%;
+}
+
+img.image-link {
+	-webkit-box-shadow: 6px 6px 6px -6px #777;
+	-moz-box-shadow: 6px 6px 6px -6px #777;
+	box-shadow: 6px 6px 6px -6px #777;
+}
+
+img.image-link:hover {
+	-webkit-box-shadow: 10px 10px 10px -10px #777;
+	-moz-box-shadow: 10px 10px 10px -10px #777;
+	box-shadow: 10px 10px 10px -10px #777;
+}
+
+/* #endregion */
+
 /* #endregion */
 
 /* #region content */
@@ -50,7 +84,7 @@ button {
 	}
 }
 
-/* #region nav-bar */
+/* #region left */
 
 .left {
 	background-image: url("images/main.jpg");
@@ -81,7 +115,8 @@ button {
 	font-family: 'Hind Madurai', sans-serif;
 	text-decoration: none;
 	font-size: 1rem;
-	padding: 1rem 3vw;
+	padding: 1rem 0;
+	width: 18%;
 }
 
 .header {
@@ -93,10 +128,6 @@ button {
 	font-size: 6rem;
 	color: #EAE4D4;
 }
-
-/* #endregion */
-
-/* #region heading */
 
 .photo {
 	grid-area: photo;
@@ -130,40 +161,7 @@ button {
 	line-height: 1.75rem;
 }
 
-/* #region right */
-
-.photos img {
-	max-width: 45%;
-	border: 5px solid white;
-}
-
-.photos img.landscape {
-	max-width: 93%;
-}
-
-a.image-link {
-	text-decoration: none;
-}
-
-img.image-link {
-	-webkit-box-shadow: 6px 6px 6px -6px #777;
-	-moz-box-shadow: 6px 6px 6px -6px #777;
-	box-shadow: 6px 6px 6px -6px #777;
-}
-
-img.image-link:hover {
-	-webkit-box-shadow: 10px 10px 10px -10px #777;
-	-moz-box-shadow: 10px 10px 10px -10px #777;
-	box-shadow: 10px 10px 10px -10px #777;
-}
-
-/* #endregion */
-
-.registry img {
-	background-color: white;
-	padding: 1rem;
-	max-width: 45%;
-}
+.registry img {}
 
 /* #endregion */
 
