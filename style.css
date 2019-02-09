@@ -106,14 +106,6 @@ img.image-link:hover {
 	grid-template-columns: auto;
 }
 
-@media (min-width: 800px) {
-	.content {
-		grid-template-rows: 100vh;
-		grid-template-columns: 2fr 1fr;
-		height: 100vh;
-	}
-}
-
 /* #region left */
 
 .left {
@@ -125,10 +117,11 @@ img.image-link:hover {
 
 .overlay {
 	display: grid;
-	grid-template-rows: 2rem calc(100vh - 2rem);
+	grid-template-rows: auto 1fr auto;
 	grid-template-columns: 100%;
 	background-color: #360B1560;
 	height: 100%;
+	color: #EAE4D4;
 }
 
 .nav-bar {
@@ -141,31 +134,37 @@ img.image-link:hover {
 
 .nav-bar a {
 	display: inline-block;
-	color: #EAE4D4;
 	text-decoration: none;
 	font-size: 1rem;
 	padding: 1rem 0;
 	width: 18%;
+	color: #EAE4D4;
 }
 
 .header {
 	text-align: center;
-	margin: auto;
+	display: grid;
+	justify-items: center;
+	align-items: center;
 }
 
 .header .text {
 	font-size: 6rem;
-	color: #EAE4D4;
 }
 
-.photo {
-	grid-area: photo;
-	width: 100%;
-	overflow: hidden;
+.scroll-for-more {
+	text-align: center;
+	font-size: 1.25rem;
+	animation: bounce 1s infinite alternate;
 }
 
-.main-photo {
-	width: 100%;
+@keyframes bounce {
+	from {
+		transform: translateY(0px) rotate(90deg);
+	}
+	to {
+		transform: translateY(-10px) rotate(90deg);
+	}
 }
 
 /* #endregion */
@@ -193,5 +192,20 @@ img.image-link:hover {
 .registry img {}
 
 /* #endregion */
+
+/* #endregion */
+
+/* #region desktop styling */
+
+@media (min-width: 800px) {
+	.content {
+		grid-template-rows: 100vh;
+		grid-template-columns: 2fr 1fr;
+		height: 100vh;
+	}
+	.scroll-for-more {
+		display: none;
+	}
+}
 
 /* #endregion */
