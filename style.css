@@ -68,7 +68,7 @@ img.image-link:hover {
 
 .field {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 1fr 1fr;
 	grid-gap: 10px;
 	line-height: 1.75rem;
 }
@@ -87,6 +87,7 @@ img.image-link:hover {
 	font-family: 'Hind Madurai', sans-serif;
 	font-size: 1rem;
 	line-height: 1rem;
+	max-width: 10rem;
 }
 
 .submit {
