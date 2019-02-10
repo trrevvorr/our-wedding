@@ -199,6 +199,18 @@ img.image-link:hover {
 #wedding-info .title-background {
 	background-image: url("images/section_header_flowers.png");
 }
+#RSVP .title-background {
+	background-image: url("images/section_header_stationary.jpg");
+}
+#about-us .title-background {
+	background-image: url("images/section_header_us.jpg");
+}
+#photos .title-background {
+	background-image: url("images/section_header_photos_cropped.PNG");
+}
+#registry .title-background {
+	background-image: url("images/section_header_registry.jpg");
+}
 
 .section .title {
 	font-size: 2.5rem;
