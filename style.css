@@ -79,7 +79,7 @@ img.image-link:hover {
 
 .field input {
 	width: 100%;
-	background-color: #360B1520;
+	background-color: rgba(54, 11, 21, 0.125);
 	border: none;
 	border-radius: 4px;
 	color: #360B15;
@@ -98,9 +98,9 @@ img.image-link:hover {
 
 /* #endregion */
 
-/* #region content */
+/* #region page */
 
-.content {
+.page {
 	display: grid;
 	grid-template-rows: 100vh 1fr;
 	grid-template-columns: auto;
@@ -119,7 +119,7 @@ img.image-link:hover {
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	grid-template-columns: 100%;
-	background-color: #360B1560;
+	background-color: rgba(54, 11, 21, 0.376);
 	height: 100%;
 	color: #EAE4D4;
 }
@@ -173,23 +173,50 @@ img.image-link:hover {
 
 .right {
 	overflow-y: auto;
-	padding: 0 2rem 2rem 2rem;
 	text-align: center;
 }
 
 .section {
-	margin-top: 4rem;
+	margin: 2rem 0;
 }
 
-.section h2 {
-	font-size: 2rem;
+.section .title-background {
+	width: 100%;
+	background-color: #360B15;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
+	margin-bottom: 1rem;
+	/* box-shadow: inset 0 0 20px #360B15; */
 }
 
-.section p {
+.section .title-overlay {
+	height: 100%;
+	background-color: rgba(54, 11, 21, 0.5);
+}
+
+#wedding-info .title-background {
+	background-image: url("images/section_header_flowers.png");
+}
+
+.section .title {
+	font-size: 2.5rem;
+	padding: 1.5rem 1rem;
+	margin: 0;
+	color: #EAE4D4;
+}
+
+.section .content {
+	margin: 1rem 2rem;
+}
+
+.section .content p {
+
 	line-height: 1.75rem;
+	padding: 0;
+	margin: 0;
 }
-
-.registry img {}
 
 /* #endregion */
 
@@ -198,13 +225,24 @@ img.image-link:hover {
 /* #region desktop styling */
 
 @media (min-width: 800px) {
-	.content {
+	.page {
 		grid-template-rows: 100vh;
 		grid-template-columns: 2fr 1fr;
 		height: 100vh;
 	}
 	.scroll-for-more {
 		display: none;
+	}
+	.section {
+		margin-left: 2rem;
+		margin-right: 2rem;
+	}
+	.section .title-background {
+		border-radius: 4px;
+	}
+	.section .content {
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
 
