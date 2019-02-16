@@ -112,7 +112,8 @@ img.image-link:hover {
 	background-image: url("images/main.jpeg");
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center;
+	background-position-x: center;
+	background-position-y: top;
 	overflow: hidden;
 }
 
