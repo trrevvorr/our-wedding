@@ -6,7 +6,7 @@ body {
 	background-color: #66454E;
 	background-color: #360B15;
 	background-color: #EAE4D4;
-	color: #360B15;
+	color: #360b15;
 	font-family: 'Hind Madurai', sans-serif;
 }
 
@@ -109,7 +109,9 @@ img.image-link:hover {
 /* #region left */
 
 .left {
-	background-image: url("images/main.jpeg");
+	/* background-image: url("images/main.jpeg"); */
+	background-image: url("images/main.JPG");
+	/* background-image: linear-gradient(to bottom, rgba(54, 11, 21, 0), rgba(54, 11, 21, 0.6)), url("images/main.jpeg"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position-x: center;
@@ -121,7 +123,7 @@ img.image-link:hover {
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	grid-template-columns: 100%;
-	background-color: rgba(54, 11, 21, 0.376);
+	background-color: rgba(54, 11, 21, 0.35);
 	height: 100%;
 	color: #EAE4D4;
 }
@@ -147,7 +149,7 @@ img.image-link:hover {
 	text-align: center;
 	display: grid;
 	justify-items: center;
-	align-items: center;
+	align-items: end;
 }
 
 .header .text {
@@ -176,10 +178,13 @@ img.image-link:hover {
 .right {
 	overflow-y: auto;
 	text-align: center;
+	display: grid;
+	justify-content: center;
 }
 
 .section {
 	margin: 2rem 0;
+	max-width: 28rem;
 }
 
 .section .title-background {
@@ -241,7 +246,7 @@ img.image-link:hover {
 @media (min-width: 800px) {
 	.page {
 		grid-template-rows: 100vh;
-		grid-template-columns: 2fr 1fr;
+		grid-template-columns: 3fr 2fr;
 		height: 100vh;
 	}
 	.scroll-for-more {
@@ -257,6 +262,11 @@ img.image-link:hover {
 	.section .content {
 		margin-left: 0;
 		margin-right: 0;
+	}
+	.header .text {
+		font-size: 9vw;
+		margin: 0;
+		margin-bottom: 1rem;
 	}
 }
 
