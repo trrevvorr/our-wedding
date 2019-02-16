@@ -109,9 +109,10 @@ img.image-link:hover {
 /* #region left */
 
 .left {
-	background-image: url("images/main.jpg");
+	background-image: url("images/main.jpeg");
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: center;
 	overflow: hidden;
 }
 
