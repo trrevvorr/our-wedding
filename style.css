@@ -17,6 +17,10 @@ h1, h2 {
 	letter-spacing: 0px;
 }
 
+h3 {
+	font-size: 1rem;
+}
+
 button, input[type=submit] {
 	padding: 1rem 2rem;
 	font-size: 1rem;
@@ -236,7 +240,7 @@ img.image-link:hover {
 
 .section .title-overlay {
 	height: 100%;
-	background-color: rgba(54, 11, 21, 0.5);
+	background-color: rgba(54, 11, 21, 0.75);
 }
 
 #wedding-info .title-background {
@@ -253,6 +257,11 @@ img.image-link:hover {
 
 #photos .title-background {
 	background-image: url("images/section_header_photos_cropped.PNG");
+}
+
+.album-title {
+	margin-bottom: 0.5rem;
+	margin-top: 1.5rem;
 }
 
 #registry .title-background {
