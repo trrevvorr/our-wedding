@@ -39,9 +39,9 @@ a.image-link {
 }
 
 img.image-link {
-	max-width: 45%;
+	max-width: 95%;
 	background-color: white;
-	padding: 0.25rem;
+	padding: 0.5rem;
 }
 
 img.image-link.landscape {
@@ -49,11 +49,47 @@ img.image-link.landscape {
 }
 
 img.image-link {
-	box-shadow: 6px 6px 6px -6px #777;
+	box-shadow: 0px 1px 6px -1px #777;
 }
 
 img.image-link:hover {
-	box-shadow: 10px 10px 10px -10px #777;
+	box-shadow: 0px 1px 12px 0px #777;
+}
+
+/* #endregion */
+
+/* regrion other */
+
+.paper-stack {
+	background: #fff;
+	padding: 0.25rem;
+	position: relative;
+}
+
+.paper-stack, .paper-stack::before, .paper-stack::after {
+	box-shadow: 1px 1px 6px -1px #777;
+}
+
+.paper-stack::before, .paper-stack::after {
+	content: "";
+	position: absolute;
+	height: 95%;
+	width: 99%;
+	background-color: white;
+}
+
+.paper-stack::before {
+	right: 15px;
+	top: 0;
+	transform: rotate(-1deg);
+	z-index: -1;
+}
+
+.paper-stack::after {
+	top: 5px;
+	right: -5px;
+	transform: rotate(1deg);
+	z-index: -2;
 }
 
 /* #endregion */
@@ -206,15 +242,19 @@ img.image-link:hover {
 #wedding-info .title-background {
 	background-image: url("images/section_header_flowers.png");
 }
+
 #RSVP .title-background {
 	background-image: url("images/section_header_stationary.jpg");
 }
+
 #about-us .title-background {
 	background-image: url("images/section_header_us.png");
 }
+
 #photos .title-background {
 	background-image: url("images/section_header_photos_cropped.PNG");
 }
+
 #registry .title-background {
 	background-image: url("images/section_header_registry.jpg");
 }
@@ -231,7 +271,6 @@ img.image-link:hover {
 }
 
 .section .content p {
-
 	line-height: 1.75rem;
 	padding: 0;
 	margin: 0;
