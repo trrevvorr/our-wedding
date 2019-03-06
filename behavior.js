@@ -6,8 +6,8 @@ function RSVPSubmitName() {
 	const lastName = form.querySelector("#last-name-field").value;
 	const phoneNumber = form.querySelector("#phone-number-field").value;
 
-	// const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
-	const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
+	const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
+	// const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("load", rsvpLoadDone);
