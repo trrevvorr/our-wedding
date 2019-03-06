@@ -36,14 +36,17 @@
 						<h2 class="title">The Big Day</h2>
 					</div>
 				</div>
-				<div class="content">
-					<p>Nemore adipiscing et mei, amet justo vivendum te pro, nam diam eleifend evertitur at. In solet accommodare cum.
-						Vim ea nibh facilis torquatos, ex his cetero omnesque. Ne commune consequuntur vel, ex vel amet quidam prompta.
-						Ea
-						magna alienum partiendo nec, decore moderatius id per.</p>
-					<p>Qui mollis nusquam ut, mea agam maiorum cu, quo aperiam impedit an. Ut qui nostro principes, eu fierent
-						evertitur
-						persequeris sed. Repudiare reprehendunt mei ut. Mel te eius brute tation. Usu in aeque dolorem theophrastus.</p>
+				<div class="outer-content">
+					<div class="content">
+						<p>Nemore adipiscing et mei, amet justo vivendum te pro, nam diam eleifend evertitur at. In solet accommodare
+							cum.
+							Vim ea nibh facilis torquatos, ex his cetero omnesque. Ne commune consequuntur vel, ex vel amet quidam prompta.
+							Ea
+							magna alienum partiendo nec, decore moderatius id per.</p>
+						<p>Qui mollis nusquam ut, mea agam maiorum cu, quo aperiam impedit an. Ut qui nostro principes, eu fierent
+							evertitur
+							persequeris sed. Repudiare reprehendunt mei ut. Mel te eius brute tation. Usu in aeque dolorem theophrastus.</p>
+					</div>
 				</div>
 			</div>
 			<div class="section" id="RSVP">
@@ -52,24 +55,39 @@
 						<h2 class="title">RSVP</h2>
 					</div>
 				</div>
-				<div class="content">
-					<form class="form" onsubmit="return RSVPSubmitName();">
-						<div class="field">
-							<label for="first-name-field">First Name</label>
-							<input type="text" id="first-name-field" required>
-						</div>
-						<div class="field">
-							<label for="last-name-field">Last Name</label>
-							<input type="text" id="last-name-field" required>
-						</div>
-						<div class="field">
-							<label for="phone-number-field">Phone Number</label>
-							<input type="tel" id="phone-number-field" required>
-						</div>
-						<div class="submit">
-							<input type="submit" id="RSVPSubmitButton" value="LOOK ME UP">
-						</div>
-					</form>
+				<div class="outer-content">
+					<div class="content">
+						<form class="form" id="guest-info-form" onsubmit="return RSVPSubmitName();">
+							<div role="alert" class="request-error">
+								<p><strong>Uh-oh!</strong></p>
+								<p>
+									We're having trouble finding you.
+									Make sure to check the spelling of your first and last name and ensure your phone number is correct.
+								</p>
+								<p>
+									If you're still having trouble, call Trevor or Nancy to RSVP manually.
+								</p>
+							</div>
+							<div class="field">
+								<label for="first-name-field">First Name</label>
+								<input type="text" id="first-name-field" required>
+							</div>
+							<div class="field">
+								<label for="last-name-field">Last Name</label>
+								<input type="text" id="last-name-field" required>
+							</div>
+							<div class="field">
+								<label for="phone-number-field">Phone Number</label>
+								<input type="tel" id="phone-number-field" required>
+							</div>
+							<div class="submit">
+								<input type="submit" id="RSVPSubmitButton" value="LOOK ME UP">
+							</div>
+						</form>
+					</div>
+					<div class="loader-container">
+						<div class="loader"></div>
+					</div>
 				</div>
 			</div>
 			<div class="section" id="about-us">
@@ -78,12 +96,14 @@
 						<h2 class="title">About Us</h2>
 					</div>
 				</div>
-				<div class="content">
-					<p>Lorem ipsum dolor sit amet, no velit essent dolorum eos. Eu mollis tamquam nec, nec nibh imperdiet et. Eos
-						nonumy
-						consequuntur cu, ut ipsum malorum consulatu nam. Ut iuvaret tacimates mei, eu odio perfecto euripidis mel, eos
-						vitae
-						legere deseruisse ne. Pri quaeque fabulas persequeris et.</p>
+				<div class="outer-content">
+					<div class="content">
+						<p>Lorem ipsum dolor sit amet, no velit essent dolorum eos. Eu mollis tamquam nec, nec nibh imperdiet et. Eos
+							nonumy
+							consequuntur cu, ut ipsum malorum consulatu nam. Ut iuvaret tacimates mei, eu odio perfecto euripidis mel, eos
+							vitae
+							legere deseruisse ne. Pri quaeque fabulas persequeris et.</p>
+					</div>
 				</div>
 			</div>
 
@@ -93,23 +113,25 @@
 						<h2 class="title">Photographs</h2>
 					</div>
 				</div>
-				<div class="content">
-					<div class="album-list">
-						<h3 class="album-title">Michigan Engagement Shoot</h4>
-							<div class="paper-stack">
-								<a class="image-link " href="https://photos.app.goo.gl/Y2FjHfmkG31HSuro6">
-									<img class="image-link" alt="engagement photo album" src="images/album_cover_1.JPG">
-								</a>
-							</div>
-							<h3 class="album-title">Missouri Engagement Shoot</h4>
+				<div class="outer-content">
+					<div class="content">
+						<div class="album-list">
+							<h3 class="album-title">Michigan Engagement Shoot</h4>
 								<div class="paper-stack">
-									<a class="image-link " href="https://photos.app.goo.gl/ytUX75ueLZizbnuK7">
-										<img class="image-link" alt="engagement photo album" src="images/album_cover_2.jpeg">
+									<a class="image-link " href="https://photos.app.goo.gl/Y2FjHfmkG31HSuro6">
+										<img class="image-link" alt="engagement photo album" src="images/album_cover_1.JPG">
 									</a>
 								</div>
+								<h3 class="album-title">Missouri Engagement Shoot</h4>
+									<div class="paper-stack">
+										<a class="image-link " href="https://photos.app.goo.gl/ytUX75ueLZizbnuK7">
+											<img class="image-link" alt="engagement photo album" src="images/album_cover_2.jpeg">
+										</a>
+									</div>
+						</div>
 					</div>
+					<p class="note">Click photos to view albums</p>
 				</div>
-				<p class="note">Click photos to view albums</p>
 			</div>
 			<div class="registry section" id="registry">
 				<div class="title-background">
@@ -117,10 +139,12 @@
 						<h2 class="title">Registry</h2>
 					</div>
 				</div>
-				<div class="content">
-					<a class="image-link" href="https://www.amazon.com/wedding/trevor-ross-nancy-krutty-plymoth-september-2019/registry/2I6EBJZX84Z94">
-						<img class="image-link" src="images/amazon_registry_logo.png">
-					</a>
+				<div class="outer-content">
+					<div class="content">
+						<a class="image-link" href="https://www.amazon.com/wedding/trevor-ross-nancy-krutty-plymoth-september-2019/registry/2I6EBJZX84Z94">
+							<img class="image-link" src="images/amazon_registry_logo.png">
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>

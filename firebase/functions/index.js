@@ -11,6 +11,7 @@ const DB = admin.firestore();
 
 exports.findGuest = functions.https.onRequest((request, response) => {
 	const { firstName, lastName, phoneNumber } = parseGuestQuery(request.query);
+	response.set('Access-Control-Allow-Origin', '*'); // allows CORS TODO: allow only github pages?
 
 	tryGetGuest(response, firstName, lastName, phoneNumber);
 });
@@ -40,19 +41,17 @@ function tryGetGuest(response, firstName, lastName, phoneNumber) {
 
 	queryRef.get()
 		.then(querySnapshot => getGuest(querySnapshot, response))
-		.catch(error => returnError(error, response));
+		.catch(error => returnError(error, response, "000"));
 }
 
 function getGuest(querySnapshot, response) {
 	if (querySnapshot.empty) {
-		console.log('No matching documents!');
-		response.send('No matching documents!');
-
+		returnError("no guests found", response, "100")
 	} else {
 		let queryGuest = querySnapshot.docs[0];
 		queryGuest.get("family").get()
 			.then(docSnapshot => getFamily(docSnapshot, response))
-			.catch(error => returnError(error, response));
+			.catch(error => returnError(error, response, "001"));
 	}
 	return;
 }
@@ -63,7 +62,7 @@ function getGuest(querySnapshot, response) {
 function getFamily(famDocSnapshot, response) {
 	DB.getAll(...famDocSnapshot.get("familyMembers"))
 		.then(memberDocs => logMembers(memberDocs, famDocSnapshot, response))
-		.catch(error => returnError(error, response));
+		.catch(error => returnError(error, response, "002"));
 
 	return;
 }
@@ -80,10 +79,12 @@ function logMembers(memberDocs, famDoc, response) {
 	return;
 }
 
-function returnError(error, response) {
-	response.send('Error getting documents');
-	console.log('Error getting documents', error);
+function returnError(error, response, errorCode) {
+	const errorMessage = "ERROR " + errorCode;
+	response.status(500).send(errorMessage);
+	console.log(errorMessage, error);
 	return;
 }
 
 // https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=sandy&lastName=ross&phoneNumber=5732001357
+// http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=sandy&lastName=ross&phoneNumber=5732001357
