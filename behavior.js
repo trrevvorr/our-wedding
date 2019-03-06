@@ -1,6 +1,6 @@
 let CURR_RSVP_STATE = "guest";
 
-function RSVPSubmitName() {
+function RSVPSubmitGuest() {
 	displayRsvpLoadingOverlay();
 	clearRsvpErrorState();
 	const form = document.querySelector("#guest-info-form");
@@ -12,7 +12,7 @@ function RSVPSubmitName() {
 	// const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
 
 	var xhttp = new XMLHttpRequest();
-	xhttp.addEventListener("load", rsvpLoadDone);
+	xhttp.addEventListener("load", guestRequestDone);
 	xhttp.addEventListener("error", rsvpLoadError);
 	xhttp.addEventListener("abort", rsvpLoadError);
 	xhttp.open("GET", request, true);
@@ -26,11 +26,13 @@ function rsvpLoadError(event) {
 	hideRsvpLoadingOverlay();
 }
 
-function rsvpLoadDone(event) {
+function guestRequestDone(event) {
 	if (event.currentTarget.status === 200) {
+		// success !
 		setFormState("family");
 		hideRsvpLoadingOverlay();
 	} else {
+		// couldn't find guest
 		rsvpLoadError(event);
 	}
 }
