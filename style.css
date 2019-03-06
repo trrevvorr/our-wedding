@@ -219,13 +219,10 @@ img.image-link:hover {
 /* #region left */
 
 .left {
-	/* background-image: url("images/main.jpeg"); */
 	background-image: url("images/main.JPG");
-	/* background-image: linear-gradient(to bottom, rgba(54, 11, 21, 0), rgba(54, 11, 21, 0.6)), url("images/main.jpeg"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position-x: center;
-	background-position-y: top;
 	overflow: hidden;
 }
 
@@ -264,7 +261,16 @@ img.image-link:hover {
 
 .header .text {
 	font-size: 6rem;
+	margin: 1rem;
 }
+
+.header .text.top {
+	height: 100%;
+}
+
+.header .text.bottom {
+}
+
 
 .scroll-for-more {
 	text-align: center;
