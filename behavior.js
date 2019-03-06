@@ -1,3 +1,5 @@
+let CURR_RSVP_STATE = "guest";
+
 function RSVPSubmitName() {
 	displayRsvpLoadingOverlay();
 	clearRsvpErrorState();
@@ -26,6 +28,7 @@ function rsvpLoadError(event) {
 
 function rsvpLoadDone(event) {
 	if (event.currentTarget.status === 200) {
+		setFormState("family");
 		hideRsvpLoadingOverlay();
 	} else {
 		rsvpLoadError(event);
@@ -42,12 +45,19 @@ function hideRsvpLoadingOverlay() {
 	rsvpContent.classList.remove("loading");
 }
 
+function clearRsvpErrorState() {
+	const rsvpContent = document.querySelector("#RSVP .form");
+	rsvpContent.classList.remove("error");
+}
+
 function setRsvpErrorState() {
 	const rsvpContent = document.querySelector("#RSVP .form");
 	rsvpContent.classList.add("error");
 }
 
-function clearRsvpErrorState() {
-	const rsvpContent = document.querySelector("#RSVP .form");
-	rsvpContent.classList.remove("error");
+function setFormState(state) {
+	const rsvpContent = document.querySelector("#RSVP .outer-content");
+	rsvpContent.classList.remove(CURR_RSVP_STATE);
+	CURR_RSVP_STATE = state;
+	rsvpContent.classList.add(CURR_RSVP_STATE);
 }

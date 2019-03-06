@@ -168,6 +168,14 @@ img.image-link:hover {
 	display: none;
 }
 
+.outer-content.guest #family-info-form {
+	display: none;
+}
+
+.outer-content.family #guest-info-form {
+	display: none;
+}
+
 .field {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
