@@ -9,11 +9,32 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const DB = admin.firestore();
 
+//#region findGuest Query
+
+/*
+responseModel = {
+	family: {
+		name: "Example Name",
+		members: [
+			{ firstName, lastName, attending, food, plusOne, },
+			...
+		],
+	},
+	menu: [
+		{
+			title: "Example Title",
+			id: "ExampleId"
+		},
+		...
+	],
+}
+*/
+
 exports.findGuest = functions.https.onRequest((request, response) => {
 	const { firstName, lastName, phoneNumber } = parseGuestQuery(request.query);
 	response.set('Access-Control-Allow-Origin', '*'); // allows CORS TODO: allow only github pages?
 
-	tryGetGuest(response, firstName, lastName, phoneNumber);
+	lookupGuest(response, firstName, lastName, phoneNumber);
 });
 
 /**
@@ -29,7 +50,7 @@ function parseGuestQuery(query) {
 	};
 }
 
-function tryGetGuest(response, firstName, lastName, phoneNumber) {
+function lookupGuest(response, firstName, lastName, phoneNumber) {
 	// Create a reference to the cities collection
 	let guests = DB.collection("guests");
 
@@ -40,17 +61,17 @@ function tryGetGuest(response, firstName, lastName, phoneNumber) {
 		.limit(1);
 
 	queryRef.get()
-		.then(querySnapshot => getGuest(querySnapshot, response))
+		.then(querySnapshot => tryGetGuest(querySnapshot, response))
 		.catch(error => returnError(error, response, "000"));
 }
 
-function getGuest(querySnapshot, response) {
+function tryGetGuest(querySnapshot, response) {
 	if (querySnapshot.empty) {
 		returnError("no guests found", response, "100")
 	} else {
 		let queryGuest = querySnapshot.docs[0];
 		queryGuest.get("family").get()
-			.then(docSnapshot => getFamily(docSnapshot, response))
+			.then(docSnapshot => addFamily(docSnapshot, response))
 			.catch(error => returnError(error, response, "001"));
 	}
 	return;
@@ -59,25 +80,70 @@ function getGuest(querySnapshot, response) {
 /**
  * given a guest, return the family and their food choices
  */
-function getFamily(famDocSnapshot, response) {
+function addFamily(famDocSnapshot, response) {
+	let responseModel = {
+		family: {
+			name: famDocSnapshot.get("name"),
+			members: [],
+		},
+		menu: [],
+	}
+
 	DB.getAll(...famDocSnapshot.get("familyMembers"))
-		.then(memberDocs => logMembers(memberDocs, famDocSnapshot, response))
+		.then(memberDocs => addFamilyMembers(memberDocs, responseModel, response))
 		.catch(error => returnError(error, response, "002"));
 
 	return;
 }
 
-function logMembers(memberDocs, famDoc, response) {
-	let names = memberDocs.map(memberDoc =>
-		`${memberDoc.get("firstName")} ${memberDoc.get("lastName")}`
+function addFamilyMembers(memberDocs, responseModel, response) {
+	responseModel.family.members = memberDocs.map(memberDoc =>
+		({
+			firstName: memberDoc.get("firstName"),
+			lastName: memberDoc.get("lastName"),
+			food: memberDoc.get("food").id,
+			attending: memberDoc.get("attending"),
+			plusOne: memberDoc.get("plusOne"),
+		})
 	);
 
-	response.send(`
-		Members: ${JSON.stringify(names)}
-		Fam: ${JSON.stringify(famDoc.get("name"))}
-	`);
+	let menu = DB.collection("menu");
+	menu.get()
+		.then(querySnapshot => addMenu(querySnapshot, responseModel, response))
+		.catch(error => returnError(error, response, "003"));
+
 	return;
 }
+
+function addMenu(menuDocs, responseModel, response) {
+	if (menuDocs.empty) {
+		returnError("no menu items found", response, "101")
+	} else {
+		responseModel.menu = menuDocs.docs.map(menuDoc =>
+			({
+				title: menuDoc.get("title"),
+				id: menuDoc.id,
+			})
+		);
+		response.send(responseModel);
+	}
+
+	return;
+}
+
+// function setFoodTitles(responseModel) {
+// 	return {
+// 		...responseModel,
+// 		family: {
+// 			...responseModel.family,
+// 			members: responseModel.family.members.map(member => ({
+// 				...member,
+// 				food: responseModel.menu
+// 			}))
+// 		}
+// 	};
+// }
+
 
 function returnError(error, response, errorCode) {
 	const errorMessage = "ERROR " + errorCode;
@@ -88,3 +154,5 @@ function returnError(error, response, errorCode) {
 
 // https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=sandy&lastName=ross&phoneNumber=5732001357
 // http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=sandy&lastName=ross&phoneNumber=5732001357
+
+//#endregion
