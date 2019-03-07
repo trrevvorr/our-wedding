@@ -70,16 +70,17 @@ function tryGetGuest(querySnapshot, response) {
 		returnError("no guests found", response, "100")
 	} else {
 		let queryGuest = querySnapshot.docs[0];
-		queryGuest.get("family").get()
-			.then(docSnapshot => addFamily(docSnapshot, response))
-			.catch(error => returnError(error, response, "001"));
+		getFamily(queryGuest, response);
 	}
 	return;
 }
 
-/**
- * given a guest, return the family and their food choices
- */
+function getFamily(queryGuest, response) {
+	queryGuest.get("family").get()
+		.then(docSnapshot => addFamily(docSnapshot, response))
+		.catch(error => returnError(error, response, "001"));
+}
+
 function addFamily(famDocSnapshot, response) {
 	let responseModel = {
 		family: {
@@ -89,11 +90,14 @@ function addFamily(famDocSnapshot, response) {
 		menu: [],
 	}
 
+	getFamilyMembers(famDocSnapshot, responseModel, response);
+	return;
+}
+
+function getFamilyMembers(famDocSnapshot, responseModel, response) {
 	DB.getAll(...famDocSnapshot.get("familyMembers"))
 		.then(memberDocs => addFamilyMembers(memberDocs, responseModel, response))
 		.catch(error => returnError(error, response, "002"));
-
-	return;
 }
 
 function addFamilyMembers(memberDocs, responseModel, response) {
@@ -107,12 +111,15 @@ function addFamilyMembers(memberDocs, responseModel, response) {
 		})
 	);
 
+	getMenu(responseModel, response);
+	return;
+}
+
+function getMenu(responseModel, response) {
 	let menu = DB.collection("menu");
 	menu.get()
 		.then(querySnapshot => addMenu(querySnapshot, responseModel, response))
 		.catch(error => returnError(error, response, "003"));
-
-	return;
 }
 
 function addMenu(menuDocs, responseModel, response) {
@@ -131,20 +138,12 @@ function addMenu(menuDocs, responseModel, response) {
 	return;
 }
 
-// function setFoodTitles(responseModel) {
-// 	return {
-// 		...responseModel,
-// 		family: {
-// 			...responseModel.family,
-// 			members: responseModel.family.members.map(member => ({
-// 				...member,
-// 				food: responseModel.menu
-// 			}))
-// 		}
-// 	};
-// }
-
-
+/**
+ * responds to client with error state and logs error in console
+ * @param error object or string to log to console
+ * @param response object used to respond to client
+ * @param errorCode string uniquely identifying error
+ */
 function returnError(error, response, errorCode) {
 	const errorMessage = "ERROR " + errorCode;
 	response.status(500).send(errorMessage);
