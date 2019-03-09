@@ -451,7 +451,8 @@ fieldset {
 }
 
 #about-us .title-background {
-	background-image: url("images/section_header_us.png");
+	background-image: url("images/section_header_about_us.jpg");
+	background-position: top;
 }
 
 #photos .title-background {
