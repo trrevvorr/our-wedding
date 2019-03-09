@@ -28,7 +28,7 @@ button, input[type=submit] {
 	font-size: 1rem;
 	line-height: 1rem;
 	background-color: transparent;
-	border: 1px solid #360B15;
+	border: 0.5px solid #360B15;
 	border-radius: 3rem;
 	color: #360B15;
 	cursor: pointer;
@@ -67,6 +67,12 @@ img.image-link:hover {
 /* #endregion */
 
 /* #region paper stack */
+
+.paper {
+	box-shadow: 0px 1px 6px -1px #777;
+	background-color: white;
+	border-radius: 1px;
+}
 
 .paper-stack {
 	background: #fff;
@@ -192,6 +198,8 @@ input[type="text"] {
 	height: 1.5rem;
 	max-width: 14rem;
 	font-family: 'Dancing Script', cursive;
+	padding-left: 0.5rem;
+	text-transform: capitalize;
 }
 
 .submit {
@@ -209,7 +217,11 @@ input[type="text"] {
 }
 
 .radio input[type="radio"] {
-	display: none;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
 	width: auto;
 }
 
@@ -218,6 +230,7 @@ input[type="text"] {
 	display: inline-block;
 	/* 16px width of fake checkbox + 6px distance between fake checkbox and text */
 	padding-left: 22px;
+	font-size: 0.85rem;
 }
 
 .radio label::before, .radio label::after {
@@ -235,7 +248,7 @@ input[type="text"] {
 	line-height: 1rem;
 	border-bottom: 0.5px solid #360b15;
 	left: 0px;
-	top: 3px;
+	top: 0px;
 	font-family: 'Dancing Script', cursive;
 	font-size: 1rem;
 }
@@ -260,6 +273,21 @@ fieldset {
 	border: none;
 	margin: 0;
 	padding: 0;
+}
+
+/*Adding focus styles on the outer-box of the fake checkbox*/
+
+.radio input[type="radio"]:focus+label::before {
+	outline-width: 2px;
+	outline-style: solid;
+	outline-color: Highlight;
+}
+
+@media (-webkit-min-device-pixel-ratio:0) {
+	.radio input[type="radio"]:focus+label::before {
+		outline-color: -webkit-focus-ring-color;
+		outline-style: auto;
+	}
 }
 
 /* #endregion */
@@ -387,7 +415,7 @@ fieldset {
 	background-image: url("images/section_header_stationary.jpg");
 }
 
-#RSVP .family-members {
+#RSVP #family-members {
 	display: grid;
 	grid-gap: 1rem;
 	width: 100%;
@@ -412,9 +440,13 @@ fieldset {
 }
 
 #RSVP .family-member {
-	border-radius: 10px;
-	background-color: rgba(54, 11, 21, 0.1);
 	padding: 1rem 0.5rem;
+	display: grid;
+	grid-gap: 1rem;
+}
+
+#RSVP #family-title {
+	margin: 0;
 }
 
 #about-us .title-background {

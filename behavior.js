@@ -6,10 +6,9 @@ function RSVPSubmitGuest() {
 	const form = document.querySelector("#guest-info-form");
 	const firstName = form.querySelector("#first-name-field").value;
 	const lastName = form.querySelector("#last-name-field").value;
-	const phoneNumber = form.querySelector("#phone-number-field").value;
 
-	const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
-	// const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`;
+	const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}`;
+	// const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}`;
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("load", guestRequestDone);
@@ -38,8 +37,70 @@ function guestRequestDone(event) {
 }
 
 function setFamilyForm(response) {
-	console.log(response);
+	const family = response.family;
+	const menu = response.menu;
+	let familyMembersNode = document.querySelector("#family-members");
+
+	setFormState("family");
+	setFamilyName(family.name);
+	family.members.forEach((member, index) => {
+		let memberNode = buildFamilyMember(member, menu, index);
+		familyMembersNode.appendChild(memberNode);
+	});
 }
+
+function setFamilyName(name) {
+	document.querySelector("#family-title").textContent = name;
+}
+
+function buildFamilyMember(familyMember, menu, index) {
+	// {firstName: "sandy", lastName: "ross", food: "S51OEa0RJLyL66hxvGKs", attending: true, plusOne: false}
+	let memberNode = document.importNode(document.querySelector("#family-member-template").content, true);
+
+	// guest name field
+	let guestNameId = "guest-name-" + index;
+	memberNode.querySelector("label[for='guest-name-x']").setAttribute("for", guestNameId)
+	let guestInput = memberNode.querySelector("input#guest-name-x")
+	guestInput.id = guestNameId;
+	guestInput.value = familyMember.firstName + " " + familyMember.lastName;
+	guestInput.disabled = !familyMember.plusOne;
+
+	// accept radio field
+	let acceptId = "accept-" + index;
+	let attendingName = "attending-radio-" + index;
+	memberNode.querySelector("label[for='accept-x']").setAttribute("for", acceptId)
+	let acceptInput = memberNode.querySelector("input#accept-x");
+	acceptInput.id = acceptId;
+	acceptInput.name = attendingName;
+	acceptInput.checked = familyMember.attending;
+
+	// decline radio field
+	let declineId = "decline-" + index;
+	memberNode.querySelector("label[for='decline-x']").setAttribute("for", declineId)
+	let declineInput = memberNode.querySelector("input#decline-x")
+	declineInput.id = declineId;
+	declineInput.name = attendingName;
+	declineInput.checked = !familyMember.attending;
+
+	return memberNode;
+}
+
+{/* <div class="family-member paper">
+	<div class="field">
+		<label id="guest-name-x">Guest</label>
+		<input class="guest-name-x" type="text">
+	</div>
+	<fieldset class="attending">
+		<span class="radio">
+			<input type="radio" id="accept-x" name="attending-radio-x">
+			<label for="accept-x">Kindly Accept</label>
+		</span>
+		<span class="radio">
+			<input type="radio" id="decline-x" name="attending-radio-x">
+			<label for="decline-x">Regretfully Decline</label>
+		</span>
+	</fieldset>
+</div> */}
 
 function displayRsvpLoadingOverlay() {
 	const rsvpContent = document.querySelector("#RSVP .outer-content");
