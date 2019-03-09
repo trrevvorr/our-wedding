@@ -69,6 +69,7 @@
 									If you're still having trouble, call Trevor or Nancy to RSVP manually.
 								</p>
 							</div>
+							<h3 id="family-title">Enter Your Name</h3>
 							<div class="field">
 								<label for="first-name-field">First Name</label>
 								<input type="text" id="first-name-field" required>
@@ -78,7 +79,25 @@
 								<input type="text" id="last-name-field" required>
 							</div>
 							<div class="submit">
-								<input type="submit" id="RSVPSubmitButton" value="LOOK ME UP">
+								<input type="submit" id="guest-info-submit" value="CONTINUE">
+							</div>
+						</form>
+						<form class="form" id="choose-family-form" onsubmit="return RSVPChooseFamily();">
+							<div role="alert" class="request-error">
+								<p><strong>Uh-oh!</strong></p>
+								<p>
+									We're having trouble saving your form.
+									Please make sure you're connected to the internet and try again.
+								</p>
+								<p>
+									If you're still having trouble, call Trevor or Nancy to RSVP manually.
+								</p>
+							</div>
+							<h3 id="family-title">Choose Your Family</h3>
+							<fieldset id="family-items">
+							</fieldset>
+							<div class="submit">
+								<input type="submit" id="choose-family-submit" value="CONTINUE">
 							</div>
 						</form>
 						<form class="form" id="family-info-form" onsubmit="return RSVPSubmitFamily();">
@@ -96,7 +115,7 @@
 							<div id="family-members">
 							</div>
 							<div class="submit">
-								<input type="submit" id="RSVPSubmitButton" value="SUBMIT">
+								<input type="submit" id="family-info-submit" value="SUBMIT">
 							</div>
 						</form>
 					</div>
@@ -166,17 +185,17 @@
 	</div>
 	<template id="family-member-template">
 		<div class="family-member paper">
-			<div class="field">
+			<div class="field guest-name">
 				<label for="guest-name-x">Guest</label>
-				<input id="guest-name-x" type="text">
+				<input id="guest-name-x" type="text" required>
 			</div>
 			<fieldset class="attending">
-				<span class="radio">
-					<input type="radio" id="accept-x" name="attending-radio-x">
+				<span class="radio accept-radio">
+					<input type="radio" id="accept-x" name="attending-radio-x" required>
 					<label for="accept-x">Kindly Accept</label>
 				</span>
-				<span class="radio">
-					<input type="radio" id="decline-x" name="attending-radio-x">
+				<span class="radio decline-radio">
+					<input type="radio" id="decline-x" name="attending-radio-x" required>
 					<label for="decline-x">Regretfully Decline</label>
 				</span>
 			</fieldset>
@@ -185,9 +204,15 @@
 		</div>
 	</template>
 	<template id="menu-item-template">
-		<span class="radio">
-			<input type="radio" id="menu-item-x" name="menu-x">
+		<span class="radio menu-item">
+			<input type="radio" id="menu-item-x" name="menu-x" required>
 			<label for="menu-item-x">Menu Item</label>
+		</span>
+	</template>
+	<template id="family-item-template">
+		<span class="radio family-item">
+			<input type="radio" id="family-item-x" name="family-items" required>
+			<label for="family-item-x">Family Item</label>
 		</span>
 	</template>
 </body>

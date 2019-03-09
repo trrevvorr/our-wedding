@@ -1,3 +1,7 @@
+let QUERY_RESPONSE = [];
+
+// #region RSVPSubmitGuest
+
 function RSVPSubmitGuest() {
 	displayRsvpLoadingOverlay();
 	clearRsvpErrorState();
@@ -42,6 +46,8 @@ function guestRequestDone(event) {
 }
 
 function parseResponseType(response) {
+	QUERY_RESPONSE = response;
+
 	if (response.length === 0) {
 		// no families returned
 		rsvpLoadError();
@@ -52,6 +58,94 @@ function parseResponseType(response) {
 		chooseFamilyForm(response);
 	}
 }
+
+//#endregion
+
+// #region chooseFamilyForm
+
+function chooseFamilyForm(response) {
+	setFormState("choose-family");
+	let familyItemsNode = document.querySelector("#family-items");
+
+	response.forEach((family, index) => {
+		let itemNode = buildFamilyItem(family, index);
+		familyItemsNode.appendChild(itemNode);
+	});
+}
+
+function buildFamilyItem(family, index) {
+	family = family.family;
+
+	let familyItemNode = document.importNode(
+		document.querySelector("#family-item-template").content,
+		true
+	);
+
+	// menu-item radio field
+	setField(
+		familyItemNode.querySelector(".family-item"),
+		"family-item-" + index,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		family.name
+	);
+
+	return familyItemNode;
+}
+
+function RSVPChooseFamily() {
+	let selectedFamilyId = document.querySelector(
+		"#choose-family-form input:checked"
+	).id;
+	let index = selectedFamilyId.slice(selectedFamilyId.length - 1);
+	index = parseInt(index);
+
+	parseResponseType([QUERY_RESPONSE[index]]);
+	return false;
+}
+
+/**
+ * sets data on passed in field such as id, value, etc.
+ * @param node dom input node to set data on,
+ * 				should be one of input type = text, radio, etc.
+ * 				should have a single input child and a single label child
+ * @param {string} id set as node's ID, should be unique to DOM
+ * @param {string} value set as node's value, used primarily for text in text fields
+ * @param {bool} checked set as node's checked state, used for checkboxes and radios
+ * @param {string} name set as node's name, used for radios
+ * @param {bool} disabled set as node's disabled state, used for all input types
+ * @param {string} textContent set as node's textContent, used for labels of all input types
+ */
+function setField(node, id, value, checked, name, disabled, textContent) {
+	let label = node.querySelector("label");
+	if (typeof id !== "undefined") {
+		label.setAttribute("for", id);
+	}
+	if (typeof textContent !== "undefined") {
+		label.textContent = textContent;
+	}
+
+	let input = node.querySelector("input");
+	if (typeof id !== "undefined") {
+		input.id = id;
+	}
+	if (typeof value !== "undefined") {
+		input.value = value;
+	}
+	if (typeof checked !== "undefined") {
+		input.checked = checked;
+	}
+	if (typeof name !== "undefined") {
+		input.name = name;
+	}
+	if (typeof disabled !== "undefined") {
+		input.disabled = disabled;
+	}
+}
+
+//#endregion
 
 // #region setFamilyForm
 
@@ -73,44 +167,38 @@ function setFamilyName(name) {
 }
 
 function buildFamilyMember(familyMember, menu, index) {
-	// {firstName: "sandy", lastName: "ross", food: "S51OEa0RJLyL66hxvGKs", attending: true, plusOne: false}
-	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
-	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
 	let memberNode = document.importNode(
 		document.querySelector("#family-member-template").content,
 		true
 	);
 
 	// guest name field
-	let guestNameId = "guest-name-" + index;
-	memberNode
-		.querySelector("label[for='guest-name-x']")
-		.setAttribute("for", guestNameId);
-	let guestInput = memberNode.querySelector("input#guest-name-x");
-	guestInput.id = guestNameId;
-	guestInput.value = familyMember.firstName + " " + familyMember.lastName;
-	guestInput.disabled = !familyMember.plusOne;
+	setField(
+		memberNode.querySelector(".guest-name"),
+		"guest-name-" + index,
+		familyMember.firstName + " " + familyMember.lastName,
+		undefined,
+		undefined,
+		!familyMember.plusOne
+	);
 
 	// accept radio field
-	let acceptId = "accept-" + index;
-	let attendingName = "attending-radio-" + index;
-	memberNode
-		.querySelector("label[for='accept-x']")
-		.setAttribute("for", acceptId);
-	let acceptInput = memberNode.querySelector("input#accept-x");
-	acceptInput.id = acceptId;
-	acceptInput.name = attendingName;
-	acceptInput.checked = familyMember.attending;
+	setField(
+		memberNode.querySelector(".accept-radio"),
+		"accept-" + index,
+		undefined,
+		familyMember.attending,
+		"attending-radio-" + index
+	);
 
 	// decline radio field
-	let declineId = "decline-" + index;
-	memberNode
-		.querySelector("label[for='decline-x']")
-		.setAttribute("for", declineId);
-	let declineInput = memberNode.querySelector("input#decline-x");
-	declineInput.id = declineId;
-	declineInput.name = attendingName;
-	declineInput.checked = !familyMember.attending;
+	setField(
+		memberNode.querySelector(".decline-radio"),
+		"decline-" + index,
+		undefined,
+		!familyMember.attending,
+		"attending-radio-" + index
+	);
 
 	// menu radios
 	let menuNode = memberNode.querySelector("fieldset.menu");
@@ -122,36 +210,26 @@ function buildFamilyMember(familyMember, menu, index) {
 }
 
 function buildMenu(item, index, choice) {
-	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
-	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
 	let menItemNode = document.importNode(
 		document.querySelector("#menu-item-template").content,
 		true
 	);
 
 	// menu-item radio field
-	let menuItemId = item.id + "-" + index;
-	let menuName = "menu-item-" + index;
-	let menuItemLabel = menItemNode.querySelector("label[for='menu-item-x']");
-	menuItemLabel.setAttribute("for", menuItemId);
-	menuItemLabel.textContent = item.title;
-	let menuItemInput = menItemNode.querySelector("input#menu-item-x");
-	menuItemInput.id = menuItemId;
-	menuItemInput.name = menuName;
-	menuItemInput.checked = choice === item.id;
+	setField(
+		menItemNode.querySelector(".menu-item"),
+		item.id + "-" + index,
+		undefined,
+		choice === item.id,
+		"menu-item-" + index,
+		undefined,
+		item.title
+	);
 
 	return menItemNode;
 }
 
 // #endregion
-
-// #region chooseFamilyForm
-
-function chooseFamilyForm(response) {
-	setFormState("choose-family");
-}
-
-//#endregion
 
 // #region modify RSVP state
 
