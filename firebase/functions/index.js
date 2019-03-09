@@ -132,7 +132,7 @@ function addMenu(menuDocs, responseModel, response) {
 				id: menuDoc.id,
 			})
 		);
-		response.send(responseModel);
+		response.json(responseModel);
 	}
 
 	return;

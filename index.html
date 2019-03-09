@@ -56,7 +56,7 @@
 						<h2 class="title">RSVP</h2>
 					</div>
 				</div>
-				<div class="outer-content guest">
+				<div class="outer-content family">
 					<div class="content">
 						<form class="form" id="guest-info-form" onsubmit="return RSVPSubmitGuest();">
 							<div role="alert" class="request-error">
@@ -96,17 +96,40 @@
 									If you're still having trouble, call Trevor or Nancy to RSVP manually.
 								</p>
 							</div>
-							<div class="field">
-								<label for="first-name-field">FAM First Name</label>
-								<input type="text" id="first-name-field" required>
-							</div>
-							<div class="field">
-								<label for="last-name-field">FAM Last Name</label>
-								<input type="text" id="last-name-field" required>
-							</div>
-							<div class="field">
-								<label for="phone-number-field">FAM Phone Number</label>
-								<input type="tel" id="phone-number-field" required>
+							<h3 class="family-title">Your Family</h3>
+							<div class="family-members">
+								<div class="family-member">
+									<div class="field">
+										<label id="guest-name-1">M</label>
+										<input class="guest-name-1" type="text">
+									</div>
+									<fieldset class="attending">
+										<span class="radio">
+											<input type="radio" id="accept-1" name="attending-radio-1">
+											<label for="accept-1">Kindly Accept</label>
+										</span>
+										<span class="radio">
+											<input type="radio" id="decline-1" name="attending-radio-1">
+											<label for="decline-1">Regretfully Decline</label>
+										</span>
+									</fieldset>
+								</div>
+								<div class="family-member">
+									<div class="field">
+										<label id="guest-name-1">M</label>
+										<input class="guest-name-1" type="text">
+									</div>
+									<fieldset class="attending">
+										<span class="radio">
+											<input type="radio" id="accept-2" name="attending-radio-2">
+											<label for="accept-2">Kindly Accept</label>
+										</span>
+										<span class="radio">
+											<input type="radio" id="decline-2" name="attending-radio-2">
+											<label for="decline-2">Regretfully Decline</label>
+										</span>
+									</fieldset>
+								</div>
 							</div>
 							<div class="submit">
 								<input type="submit" id="RSVPSubmitButton" value="SUBMIT">
@@ -144,18 +167,18 @@
 				<div class="outer-content">
 					<div class="content">
 						<div class="album-list">
-							<h3 class="album-title">Michigan Engagement Shoot</h4>
-								<div class="paper-stack">
-									<a class="image-link " href="https://photos.app.goo.gl/Y2FjHfmkG31HSuro6">
-										<img class="image-link" alt="engagement photo album" src="images/album_cover_1.JPG">
-									</a>
-								</div>
-								<h3 class="album-title">Missouri Engagement Shoot</h4>
-									<div class="paper-stack">
-										<a class="image-link " href="https://photos.app.goo.gl/ytUX75ueLZizbnuK7">
-											<img class="image-link" alt="engagement photo album" src="images/album_cover_2.jpeg">
-										</a>
-									</div>
+							<h3 class="album-title">Michigan Engagement Shoot</h3>
+							<div class="paper-stack">
+								<a class="image-link " href="https://photos.app.goo.gl/Y2FjHfmkG31HSuro6">
+									<img class="image-link" alt="engagement photo album" src="images/album_cover_1.JPG">
+								</a>
+							</div>
+							<h3 class="album-title">Missouri Engagement Shoot</h3>
+							<div class="paper-stack">
+								<a class="image-link " href="https://photos.app.goo.gl/ytUX75ueLZizbnuK7">
+									<img class="image-link" alt="engagement photo album" src="images/album_cover_2.jpeg">
+								</a>
+							</div>
 						</div>
 					</div>
 					<p class="note">Click photos to view albums</p>
@@ -177,6 +200,14 @@
 			</div>
 		</div>
 	</div>
+	<template id="family-member-template">
+		<div class="family-member">
+			<input class="attending" type="checkbox">
+			<input class="firstName" type="text">
+			<input class="lastName" type="text">
+			<select class="food"></select>
+		</div>
+	</template>
 </body>
 
 </html>

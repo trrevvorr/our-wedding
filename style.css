@@ -13,8 +13,8 @@ body {
 /* #region shared */
 
 /* #region text */
-h1,
-h2 {
+
+h1, h2 {
 	font-family: 'Dancing Script', cursive;
 	letter-spacing: 0px;
 }
@@ -23,8 +23,7 @@ h3 {
 	font-size: 1rem;
 }
 
-button,
-input[type=submit] {
+button, input[type=submit] {
 	padding: 1rem 2rem;
 	font-size: 1rem;
 	line-height: 1rem;
@@ -75,14 +74,11 @@ img.image-link:hover {
 	position: relative;
 }
 
-.paper-stack,
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack, .paper-stack::before, .paper-stack::after {
 	box-shadow: 1px 1px 6px -1px #777;
 }
 
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack::before, .paper-stack::after {
 	content: "";
 	position: absolute;
 	height: 95%;
@@ -136,7 +132,6 @@ img.image-link:hover {
 	0% {
 		transform: rotate(0deg);
 	}
-
 	100% {
 		transform: rotate(360deg);
 	}
@@ -178,30 +173,102 @@ img.image-link:hover {
 
 .field {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: auto auto;
 	grid-gap: 10px;
-	line-height: 1.75rem;
+	align-items: baseline;
 }
 
 .field label {
 	text-align: right;
 }
 
-.field input {
+input[type="text"] {
 	width: 100%;
-	background-color: rgba(54, 11, 21, 0.125);
+	background-color: transparent;
 	border: none;
-	border-radius: 4px;
+	border-bottom: 0.5px solid #360B15;
 	color: #360B15;
-	padding: 0 3px;
-	font-family: 'Hind Madurai', sans-serif;
-	font-size: 1rem;
-	line-height: 1rem;
-	max-width: 10rem;
+	font-size: 1.5rem;
+	max-width: 14rem;
+	font-family: 'Dancing Script', cursive;
 }
 
 .submit {
 	margin-top: 1rem;
+}
+
+/* #endregion */
+
+/* #region radio */
+
+.radio {}
+
+.radio:not(:first-child) {
+	margin-left: 1rem;
+}
+
+.radio input[type="radio"] {
+	display: none;
+	width: auto;
+}
+
+.radio label {
+	position: relative;
+	display: inline-block;
+	/* 16px width of fake checkbox + 6px distance between fake checkbox and text */
+	padding-left: 22px;
+}
+
+.radio label::before, .radio label::after {
+	position: absolute;
+	content: "";
+	/* Needed for the line-height to take effect */
+	display: inline-block;
+}
+
+/*Outer box of the fake checkbox*/
+
+.radio label::before {
+	height: 16px;
+	width: 16px;
+	border-bottom: 1px solid #360b15;
+	left: 0px;
+	/* (24px line-height - 16px height of fake checkbox) / 2 - 1px for the border to vertically center it. */
+	top: 3px;
+}
+
+/* Checkmark of the fake checkbox */
+
+.radio label::after {
+	height: 5px;
+	width: 9px;
+	border-left: 1px solid #360b15;
+	border-bottom: 1px solid #360b15;
+	transform: rotate(-45deg);
+	left: 4px;
+	top: 6px;
+}
+
+/* Hide the checkmark by default */
+
+.radio input[type="radio"]+label::after {
+	content: none;
+}
+
+/* Unhide on the checked state */
+
+.radio input[type="radio"]:checked+label::after {
+	content: "";
+}
+
+/* #endregion */
+
+/* #region fieldset */
+
+fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
 }
 
 /* #endregion */
@@ -272,7 +339,6 @@ img.image-link:hover {
 	padding-bottom: 2rem;
 }
 
-
 .scroll-for-more {
 	text-align: center;
 	font-size: 1.25rem;
@@ -283,7 +349,6 @@ img.image-link:hover {
 	from {
 		transform: translateY(0px) rotate(90deg);
 	}
-
 	to {
 		transform: translateY(-10px) rotate(90deg);
 	}
@@ -331,6 +396,36 @@ img.image-link:hover {
 	background-image: url("images/section_header_stationary.jpg");
 }
 
+#RSVP .family-members {
+	display: grid;
+	grid-gap: 1rem;
+	width: 100%;
+}
+
+#RSVP .family-member-labels, #RSVP .family-member {
+	display: grid;
+	/* grid-template-columns: 1fr 2fr 2fr 2fr; */
+	grid-gap: 1rem;
+	align-items: center;
+	justify-items: center;
+}
+
+#RSVP .family-member-labels {
+	font-size: 0.75rem;
+	grid-gap: 0rem;
+	justify-items: center;
+}
+
+#RSVP form {
+	width: calc(100% - 4rem);
+}
+
+#RSVP .family-member {
+	border-radius: 10px;
+	background-color: rgba(54, 11, 21, 0.125);
+	padding: 0.5rem;
+}
+
 #about-us .title-background {
 	background-image: url("images/section_header_us.png");
 }
@@ -357,6 +452,7 @@ img.image-link:hover {
 
 .section .content {
 	margin: 1rem 2rem;
+	width: 100%;
 }
 
 .section .outer-content {
@@ -383,25 +479,20 @@ img.image-link:hover {
 		grid-template-columns: 3fr 2fr;
 		height: 100vh;
 	}
-
 	.scroll-for-more {
 		display: none;
 	}
-
 	.section {
 		margin-left: 2rem;
 		margin-right: 2rem;
 	}
-
 	.section .title-background {
 		border-radius: 4px;
 	}
-
 	.section .content {
 		margin-left: 0;
 		margin-right: 0;
 	}
-
 	.header .text {
 		font-size: 9vw;
 		margin: 0;

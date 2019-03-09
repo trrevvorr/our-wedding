@@ -29,12 +29,16 @@ function rsvpLoadError(event) {
 function guestRequestDone(event) {
 	if (event.currentTarget.status === 200) {
 		// success !
-		setFormState("family");
+		setFamilyForm(JSON.parse(event.currentTarget.response));
 		hideRsvpLoadingOverlay();
 	} else {
 		// couldn't find guest
 		rsvpLoadError(event);
 	}
+}
+
+function setFamilyForm(response) {
+	console.log(response);
 }
 
 function displayRsvpLoadingOverlay() {
