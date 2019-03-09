@@ -7,3 +7,9 @@ I created this website for my wedding. I wanted something:
 -   free (using github pages and firebase, don't even have to pay for a host)
 
 To see it in action: https://trrevvorr.github.io/our-wedding/?key=demo
+
+## Run Locally
+
+-   `cd our-wedding`
+-   `npm i`
+-   `npm run serve`

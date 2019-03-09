@@ -6,9 +6,11 @@ function RSVPSubmitGuest() {
 	const form = document.querySelector("#guest-info-form");
 	const firstName = form.querySelector("#first-name-field").value;
 	const lastName = form.querySelector("#last-name-field").value;
+	let key = new URLSearchParams(window.location.search).get("key");
+	key = key === null ? "" : key;
 
-	const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}`;
-	// const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}`;
+	// const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+	const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("load", guestRequestDone);
@@ -57,12 +59,17 @@ function buildFamilyMember(familyMember, menu, index) {
 	// {firstName: "sandy", lastName: "ross", food: "S51OEa0RJLyL66hxvGKs", attending: true, plusOne: false}
 	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
 	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
-	let memberNode = document.importNode(document.querySelector("#family-member-template").content, true);
+	let memberNode = document.importNode(
+		document.querySelector("#family-member-template").content,
+		true
+	);
 
 	// guest name field
 	let guestNameId = "guest-name-" + index;
-	memberNode.querySelector("label[for='guest-name-x']").setAttribute("for", guestNameId)
-	let guestInput = memberNode.querySelector("input#guest-name-x")
+	memberNode
+		.querySelector("label[for='guest-name-x']")
+		.setAttribute("for", guestNameId);
+	let guestInput = memberNode.querySelector("input#guest-name-x");
 	guestInput.id = guestNameId;
 	guestInput.value = familyMember.firstName + " " + familyMember.lastName;
 	guestInput.disabled = !familyMember.plusOne;
@@ -70,7 +77,9 @@ function buildFamilyMember(familyMember, menu, index) {
 	// accept radio field
 	let acceptId = "accept-" + index;
 	let attendingName = "attending-radio-" + index;
-	memberNode.querySelector("label[for='accept-x']").setAttribute("for", acceptId)
+	memberNode
+		.querySelector("label[for='accept-x']")
+		.setAttribute("for", acceptId);
 	let acceptInput = memberNode.querySelector("input#accept-x");
 	acceptInput.id = acceptId;
 	acceptInput.name = attendingName;
@@ -78,15 +87,17 @@ function buildFamilyMember(familyMember, menu, index) {
 
 	// decline radio field
 	let declineId = "decline-" + index;
-	memberNode.querySelector("label[for='decline-x']").setAttribute("for", declineId)
-	let declineInput = memberNode.querySelector("input#decline-x")
+	memberNode
+		.querySelector("label[for='decline-x']")
+		.setAttribute("for", declineId);
+	let declineInput = memberNode.querySelector("input#decline-x");
 	declineInput.id = declineId;
 	declineInput.name = attendingName;
 	declineInput.checked = !familyMember.attending;
 
 	// menu radios
 	let menuNode = memberNode.querySelector("fieldset.menu");
-	menu.forEach((item) => {
+	menu.forEach(item => {
 		menuNode.appendChild(buildMenu(item, index, familyMember.food));
 	});
 
@@ -96,7 +107,10 @@ function buildFamilyMember(familyMember, menu, index) {
 function buildMenu(item, index, choice) {
 	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
 	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
-	let menItemNode = document.importNode(document.querySelector("#menu-item-template").content, true);
+	let menItemNode = document.importNode(
+		document.querySelector("#menu-item-template").content,
+		true
+	);
 
 	// menu-item radio field
 	let menuItemId = item.id + "-" + index;
@@ -112,7 +126,8 @@ function buildMenu(item, index, choice) {
 	return menItemNode;
 }
 
-{/* <div class="family-member paper">
+{
+	/* <div class="family-member paper">
 	<div class="field">
 		<label id="guest-name-x">Guest</label>
 		<input class="guest-name-x" type="text">
@@ -127,7 +142,8 @@ function buildMenu(item, index, choice) {
 			<label for="decline-x">Regretfully Decline</label>
 		</span>
 	</fieldset>
-</div> */}
+</div> */
+}
 
 function displayRsvpLoadingOverlay() {
 	const rsvpContent = document.querySelector("#RSVP .outer-content");
