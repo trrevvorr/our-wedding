@@ -2,10 +2,10 @@
 // test with `firebase serve --only functions`
 
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
-const functions = require('firebase-functions');
+const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 admin.initializeApp();
 const DB = admin.firestore();
 
@@ -31,11 +31,38 @@ responseModel = {
 */
 
 exports.findGuest = functions.https.onRequest((request, response) => {
-	const { firstName, lastName } = parseGuestQuery(request.query);
-	response.set('Access-Control-Allow-Origin', '*'); // allows CORS TODO: allow only github pages?
-
-	lookupGuest(response, firstName, lastName);
+	response.set("Access-Control-Allow-Origin", "*"); // allows CORS TODO: allow only github pages?
+	validateRequest(request, response, guestLookupRequest);
 });
+
+function validateRequest(request, response, requestCallback) {
+	const key = request.query.key;
+
+	if (key) {
+		let keyRef = DB.collection("keys").doc(key);
+		keyRef
+			.get()
+			.then(keyDoc => {
+				if (!keyDoc.exists) {
+					// invalid key, deny request
+					returnError(`Key "${key}" not found`, response, "200");
+				} else {
+					// key found, continue with request
+					let writePermission = keyDoc.get("writePermission");
+					requestCallback(request, response, writePermission);
+				}
+				return;
+			})
+			.catch(error => returnError(error, response, "201"));
+	} else {
+		returnError(`No key found`, response, "202");
+	}
+}
+
+function guestLookupRequest(request, response) {
+	const { firstName, lastName } = parseGuestQuery(request.query);
+	lookupGuest(response, firstName, lastName);
+}
 
 /**
  * parses findGuest query into discreet pieces
@@ -45,7 +72,7 @@ exports.findGuest = functions.https.onRequest((request, response) => {
 function parseGuestQuery(query) {
 	return {
 		firstName: query.firstName.toLowerCase(),
-		lastName: query.lastName.toLowerCase(),
+		lastName: query.lastName.toLowerCase()
 	};
 }
 
@@ -54,17 +81,19 @@ function lookupGuest(response, firstName, lastName) {
 	let guests = DB.collection("guests");
 
 	// Create a query against the collection
-	let queryRef = guests.where("firstName", "==", firstName)
+	let queryRef = guests
+		.where("firstName", "==", firstName)
 		.where("lastName", "==", lastName);
 
-	queryRef.get()
+	queryRef
+		.get()
 		.then(querySnapshot => tryGetGuest(querySnapshot, response))
 		.catch(error => returnError(error, response, "000"));
 }
 
 function tryGetGuest(querySnapshot, response) {
 	if (querySnapshot.empty) {
-		returnError("no guests found", response, "100")
+		returnError("no guests found", response, "100");
 	} else {
 		// TODO: support case where multiple guests share first and last name
 		let queryGuest = querySnapshot.docs[0];
@@ -74,7 +103,9 @@ function tryGetGuest(querySnapshot, response) {
 }
 
 function getFamily(queryGuest, response) {
-	queryGuest.get("family").get()
+	queryGuest
+		.get("family")
+		.get()
 		.then(docSnapshot => addFamily(docSnapshot, response))
 		.catch(error => returnError(error, response, "001"));
 }
@@ -83,10 +114,10 @@ function addFamily(famDocSnapshot, response) {
 	let responseModel = {
 		family: {
 			name: famDocSnapshot.get("name"),
-			members: [],
+			members: []
 		},
-		menu: [],
-	}
+		menu: []
+	};
 
 	getFamilyMembers(famDocSnapshot, responseModel, response);
 	return;
@@ -94,20 +125,20 @@ function addFamily(famDocSnapshot, response) {
 
 function getFamilyMembers(famDocSnapshot, responseModel, response) {
 	DB.getAll(...famDocSnapshot.get("familyMembers"))
-		.then(memberDocs => addFamilyMembers(memberDocs, responseModel, response))
+		.then(memberDocs =>
+			addFamilyMembers(memberDocs, responseModel, response)
+		)
 		.catch(error => returnError(error, response, "002"));
 }
 
 function addFamilyMembers(memberDocs, responseModel, response) {
-	responseModel.family.members = memberDocs.map(memberDoc =>
-		({
-			firstName: memberDoc.get("firstName"),
-			lastName: memberDoc.get("lastName"),
-			food: memberDoc.get("food").id,
-			attending: memberDoc.get("attending"),
-			plusOne: memberDoc.get("plusOne"),
-		})
-	);
+	responseModel.family.members = memberDocs.map(memberDoc => ({
+		firstName: memberDoc.get("firstName"),
+		lastName: memberDoc.get("lastName"),
+		food: memberDoc.get("food").id,
+		attending: memberDoc.get("attending"),
+		plusOne: memberDoc.get("plusOne")
+	}));
 
 	getMenu(responseModel, response);
 	return;
@@ -122,14 +153,12 @@ function getMenu(responseModel, response) {
 
 function addMenu(menuDocs, responseModel, response) {
 	if (menuDocs.empty) {
-		returnError("no menu items found", response, "101")
+		returnError("no menu items found", response, "101");
 	} else {
-		responseModel.menu = menuDocs.docs.map(menuDoc =>
-			({
-				title: menuDoc.get("title"),
-				id: menuDoc.id,
-			})
-		);
+		responseModel.menu = menuDocs.docs.map(menuDoc => ({
+			title: menuDoc.get("title"),
+			id: menuDoc.id
+		}));
 		response.json(responseModel);
 	}
 

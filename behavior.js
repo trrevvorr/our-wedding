@@ -6,11 +6,16 @@ function RSVPSubmitGuest() {
 	const form = document.querySelector("#guest-info-form");
 	const firstName = form.querySelector("#first-name-field").value;
 	const lastName = form.querySelector("#last-name-field").value;
-	let key = new URLSearchParams(window.location.search).get("key");
+	let queryParams = new URLSearchParams(window.location.search);
+	let key = queryParams.get("key");
 	key = key === null ? "" : key;
+	let useFirebaseServe = queryParams.get("useServe");
 
-	// const request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
-	const request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+	// user local firebase serve for local testing
+	let request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+	if (useFirebaseServe) {
+		request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+	}
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("load", guestRequestDone);
