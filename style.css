@@ -189,6 +189,7 @@ input[type="text"] {
 	border-bottom: 0.5px solid #360B15;
 	color: #360B15;
 	font-size: 1.5rem;
+	height: 1.5rem;
 	max-width: 14rem;
 	font-family: 'Dancing Script', cursive;
 }
@@ -229,24 +230,14 @@ input[type="text"] {
 /*Outer box of the fake checkbox*/
 
 .radio label::before {
-	height: 16px;
-	width: 16px;
-	border-bottom: 1px solid #360b15;
+	height: 1rem;
+	width: 1rem;
+	line-height: 1rem;
+	border-bottom: 0.5px solid #360b15;
 	left: 0px;
-	/* (24px line-height - 16px height of fake checkbox) / 2 - 1px for the border to vertically center it. */
 	top: 3px;
-}
-
-/* Checkmark of the fake checkbox */
-
-.radio label::after {
-	height: 5px;
-	width: 9px;
-	border-left: 1px solid #360b15;
-	border-bottom: 1px solid #360b15;
-	transform: rotate(-45deg);
-	left: 4px;
-	top: 6px;
+	font-family: 'Dancing Script', cursive;
+	font-size: 1rem;
 }
 
 /* Hide the checkmark by default */
@@ -257,8 +248,8 @@ input[type="text"] {
 
 /* Unhide on the checked state */
 
-.radio input[type="radio"]:checked+label::after {
-	content: "";
+.radio input[type="radio"]:checked+label::before {
+	content: "X";
 }
 
 /* #endregion */
@@ -422,8 +413,8 @@ fieldset {
 
 #RSVP .family-member {
 	border-radius: 10px;
-	background-color: rgba(54, 11, 21, 0.125);
-	padding: 0.5rem;
+	background-color: rgba(54, 11, 21, 0.1);
+	padding: 1rem 0.5rem;
 }
 
 #about-us .title-background {
