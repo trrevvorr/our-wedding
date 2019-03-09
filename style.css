@@ -213,8 +213,6 @@ input[type="text"] {
 
 /* #region radio */
 
-.radio {}
-
 .radio:not(:first-child) {
 	margin-left: 1rem;
 }
