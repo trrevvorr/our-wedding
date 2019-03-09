@@ -55,6 +55,8 @@ function setFamilyName(name) {
 
 function buildFamilyMember(familyMember, menu, index) {
 	// {firstName: "sandy", lastName: "ross", food: "S51OEa0RJLyL66hxvGKs", attending: true, plusOne: false}
+	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
+	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
 	let memberNode = document.importNode(document.querySelector("#family-member-template").content, true);
 
 	// guest name field
@@ -82,7 +84,32 @@ function buildFamilyMember(familyMember, menu, index) {
 	declineInput.name = attendingName;
 	declineInput.checked = !familyMember.attending;
 
+	// menu radios
+	let menuNode = memberNode.querySelector("fieldset.menu");
+	menu.forEach((item) => {
+		menuNode.appendChild(buildMenu(item, index, familyMember.food));
+	});
+
 	return memberNode;
+}
+
+function buildMenu(item, index, choice) {
+	//0: {title: "Hotdog", id: "S51OEa0RJLyL66hxvGKs"}
+	//1: {title: "not Hotdog", id: "vtIyY0LVF6iK2vF0LtMW"}
+	let menItemNode = document.importNode(document.querySelector("#menu-item-template").content, true);
+
+	// menu-item radio field
+	let menuItemId = item.id + "-" + index;
+	let menuName = "menu-item-" + index;
+	let menuItemLabel = menItemNode.querySelector("label[for='menu-item-x']");
+	menuItemLabel.setAttribute("for", menuItemId);
+	menuItemLabel.textContent = item.title;
+	let menuItemInput = menItemNode.querySelector("input#menu-item-x");
+	menuItemInput.id = menuItemId;
+	menuItemInput.name = menuName;
+	menuItemInput.checked = choice === item.id;
+
+	return menItemNode;
 }
 
 {/* <div class="family-member paper">
