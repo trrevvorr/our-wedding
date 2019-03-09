@@ -199,6 +199,7 @@ input[type="text"] {
 	max-width: 14rem;
 	font-family: 'Dancing Script', cursive;
 	padding-left: 0.5rem;
+	width: calc(100% - 0.5rem);
 	text-transform: capitalize;
 }
 
@@ -436,11 +437,11 @@ fieldset {
 }
 
 #RSVP form {
-	width: calc(100% - 4rem);
+	width: 100%;
 }
 
 #RSVP .family-member {
-	padding: 1rem 0.5rem;
+	padding: 2rem 0.5rem;
 	display: grid;
 	grid-gap: 1rem;
 }
@@ -475,13 +476,13 @@ fieldset {
 
 .section .content {
 	margin: 1rem 2rem;
-	width: 100%;
 }
 
 .section .outer-content {
 	position: relative;
 	padding-top: 1rem;
 	padding-bottom: 2rem;
+	width: 100%;
 }
 
 .section .content p {
