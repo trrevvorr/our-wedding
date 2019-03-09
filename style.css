@@ -171,14 +171,6 @@ img.image-link:hover {
 	display: none;
 }
 
-.outer-content.guest #family-info-form {
-	display: none;
-}
-
-.outer-content.family #guest-info-form {
-	display: none;
-}
-
 .field {
 	display: grid;
 	grid-template-columns: auto auto;
@@ -448,6 +440,18 @@ fieldset {
 
 #RSVP #family-title {
 	margin: 0;
+}
+
+#RSVP .outer-content.guest #family-info-form, #RSVP .outer-content.choose-family #family-info-form {
+	display: none;
+}
+
+#RSVP .outer-content.family #guest-info-form, #RSVP .outer-content.choose-family #guest-info-form {
+	display: none;
+}
+
+#RSVP .outer-content.family #choose-family-form, #RSVP .outer-content.guest #choose-family-form {
+	display: none;
 }
 
 #about-us .title-background {

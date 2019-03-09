@@ -95,22 +95,28 @@ function tryGetGuest(querySnapshot, response) {
 	if (querySnapshot.empty) {
 		returnError("no guests found", response, "100");
 	} else {
-		// TODO: support case where multiple guests share first and last name
-		let queryGuest = querySnapshot.docs[0];
-		getFamily(queryGuest, response);
+		let promises = querySnapshot.docs.map(
+			doc =>
+				new Promise((resolve, reject) =>
+					getFamily(doc, { resolve, reject })
+				)
+		);
+		Promise.all(promises)
+			.then(results => response.json(results))
+			.catch(error => returnError(error, response, "300"));
 	}
 	return;
 }
 
-function getFamily(queryGuest, response) {
+function getFamily(queryGuest, promise) {
 	queryGuest
 		.get("family")
 		.get()
-		.then(docSnapshot => addFamily(docSnapshot, response))
-		.catch(error => returnError(error, response, "001"));
+		.then(docSnapshot => addFamily(docSnapshot, promise))
+		.catch(error => promise.reject(error));
 }
 
-function addFamily(famDocSnapshot, response) {
+function addFamily(famDocSnapshot, promise) {
 	let responseModel = {
 		family: {
 			name: famDocSnapshot.get("name"),
@@ -119,19 +125,19 @@ function addFamily(famDocSnapshot, response) {
 		menu: []
 	};
 
-	getFamilyMembers(famDocSnapshot, responseModel, response);
+	getFamilyMembers(famDocSnapshot, responseModel, promise);
 	return;
 }
 
-function getFamilyMembers(famDocSnapshot, responseModel, response) {
+function getFamilyMembers(famDocSnapshot, responseModel, promise) {
 	DB.getAll(...famDocSnapshot.get("familyMembers"))
 		.then(memberDocs =>
-			addFamilyMembers(memberDocs, responseModel, response)
+			addFamilyMembers(memberDocs, responseModel, promise)
 		)
-		.catch(error => returnError(error, response, "002"));
+		.catch(error => promise.reject(error));
 }
 
-function addFamilyMembers(memberDocs, responseModel, response) {
+function addFamilyMembers(memberDocs, responseModel, promise) {
 	responseModel.family.members = memberDocs.map(memberDoc => ({
 		firstName: memberDoc.get("firstName"),
 		lastName: memberDoc.get("lastName"),
@@ -140,26 +146,27 @@ function addFamilyMembers(memberDocs, responseModel, response) {
 		plusOne: memberDoc.get("plusOne")
 	}));
 
-	getMenu(responseModel, response);
+	getMenu(responseModel, promise);
 	return;
 }
 
-function getMenu(responseModel, response) {
+function getMenu(responseModel, promise) {
 	let menu = DB.collection("menu");
 	menu.get()
-		.then(querySnapshot => addMenu(querySnapshot, responseModel, response))
-		.catch(error => returnError(error, response, "003"));
+		.then(querySnapshot => addMenu(querySnapshot, responseModel, promise))
+		.catch(error => promise.reject(error));
 }
 
-function addMenu(menuDocs, responseModel, response) {
+function addMenu(menuDocs, responseModel, promise) {
 	if (menuDocs.empty) {
-		returnError("no menu items found", response, "101");
+		promise.reject("no menu items found");
 	} else {
 		responseModel.menu = menuDocs.docs.map(menuDoc => ({
 			title: menuDoc.get("title"),
 			id: menuDoc.id
 		}));
-		response.json(responseModel);
+		// TODO: only return one menu per request
+		promise.resolve(responseModel);
 	}
 
 	return;

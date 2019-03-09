@@ -1,5 +1,3 @@
-let CURR_RSVP_STATE = "guest";
-
 function RSVPSubmitGuest() {
 	displayRsvpLoadingOverlay();
 	clearRsvpErrorState();
@@ -27,7 +25,7 @@ function RSVPSubmitGuest() {
 	return false;
 }
 
-function rsvpLoadError(event) {
+function rsvpLoadError() {
 	setRsvpErrorState();
 	hideRsvpLoadingOverlay();
 }
@@ -35,13 +33,27 @@ function rsvpLoadError(event) {
 function guestRequestDone(event) {
 	if (event.currentTarget.status === 200) {
 		// success !
-		setFamilyForm(JSON.parse(event.currentTarget.response));
+		parseResponseType(JSON.parse(event.currentTarget.response));
 		hideRsvpLoadingOverlay();
 	} else {
 		// couldn't find guest
-		rsvpLoadError(event);
+		rsvpLoadError();
 	}
 }
+
+function parseResponseType(response) {
+	if (response.length === 0) {
+		// no families returned
+		rsvpLoadError();
+	} else if (response.length === 1) {
+		// single family returned, continue to RSVP
+		setFamilyForm(response[0]);
+	} else {
+		chooseFamilyForm(response);
+	}
+}
+
+// #region setFamilyForm
 
 function setFamilyForm(response) {
 	const family = response.family;
@@ -131,24 +143,19 @@ function buildMenu(item, index, choice) {
 	return menItemNode;
 }
 
-{
-	/* <div class="family-member paper">
-	<div class="field">
-		<label id="guest-name-x">Guest</label>
-		<input class="guest-name-x" type="text">
-	</div>
-	<fieldset class="attending">
-		<span class="radio">
-			<input type="radio" id="accept-x" name="attending-radio-x">
-			<label for="accept-x">Kindly Accept</label>
-		</span>
-		<span class="radio">
-			<input type="radio" id="decline-x" name="attending-radio-x">
-			<label for="decline-x">Regretfully Decline</label>
-		</span>
-	</fieldset>
-</div> */
+// #endregion
+
+// #region chooseFamilyForm
+
+function chooseFamilyForm(response) {
+	setFormState("choose-family");
 }
+
+//#endregion
+
+// #region modify RSVP state
+
+let CURR_RSVP_STATE = "guest";
 
 function displayRsvpLoadingOverlay() {
 	const rsvpContent = document.querySelector("#RSVP .outer-content");
@@ -176,3 +183,5 @@ function setFormState(state) {
 	CURR_RSVP_STATE = state;
 	rsvpContent.classList.add(CURR_RSVP_STATE);
 }
+
+//#endregion
