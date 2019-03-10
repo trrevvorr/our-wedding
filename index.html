@@ -61,7 +61,7 @@
 					<div class="content">
 						<form class="form" id="guest-info-form" onsubmit="return RSVPSubmitGuest();">
 							<div role="alert" class="request-error">
-								<p><strong>Uh-oh!</strong></p>
+								<h3>Uh-oh!</h3>
 								<p>
 									We're having trouble finding you.
 									Make sure to check the spelling of your first and last name and ensure your phone number is correct.
@@ -70,7 +70,11 @@
 									If you're still having trouble, call Trevor or Nancy to RSVP manually.
 								</p>
 							</div>
-							<h3 id="family-title">Enter Your Name</h3>
+							<div role="alert" class="request-success">
+								<h3>Success!</h3>
+								<p>Your changes have been saved.</p>
+							</div>
+							<h3>Enter Your Name</h3>
 							<div class="field">
 								<label for="first-name-field">First Name</label>
 								<input type="text" id="first-name-field" required>
@@ -85,7 +89,7 @@
 						</form>
 						<form class="form" id="choose-family-form" onsubmit="return RSVPChooseFamily();">
 							<div role="alert" class="request-error">
-								<p><strong>Uh-oh!</strong></p>
+								<h3>Uh-oh!</h3>
 								<p>
 									We're having trouble saving your form.
 									Please make sure you're connected to the internet and try again.
@@ -94,7 +98,7 @@
 									If you're still having trouble, call Trevor or Nancy to RSVP manually.
 								</p>
 							</div>
-							<h3 id="family-title">Choose Your Family</h3>
+							<h3>Choose Your Family</h3>
 							<fieldset id="family-items">
 							</fieldset>
 							<div class="submit">
@@ -103,7 +107,7 @@
 						</form>
 						<form class="form" id="family-info-form" onsubmit="return RSVPSubmitFamily();">
 							<div role="alert" class="request-error">
-								<p><strong>Uh-oh!</strong></p>
+								<h3>Uh-oh!</h3>
 								<p>
 									We're having trouble saving your form.
 									Please make sure you're connected to the internet and try again.

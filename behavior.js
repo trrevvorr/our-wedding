@@ -3,26 +3,31 @@ let QUERY_RESPONSE = [];
 // #region RSVPSubmitGuest
 
 function RSVPSubmitGuest() {
-	displayRsvpLoadingOverlay();
-	clearRsvpErrorState();
-	const form = document.querySelector("#guest-info-form");
-	const firstName = form.querySelector("#first-name-field").value;
-	const lastName = form.querySelector("#last-name-field").value;
-	let queryParams = new URLSearchParams(window.location.search);
-	let key = queryParams.get("key");
-	key = key === null ? "" : key;
+	try {
+		displayRsvpLoadingOverlay();
+		clearRsvpErrorState();
+		clearRsvpSuccessState();
+		const form = document.querySelector("#guest-info-form");
+		const firstName = form.querySelector("#first-name-field").value;
+		const lastName = form.querySelector("#last-name-field").value;
+		let queryParams = new URLSearchParams(window.location.search);
+		let key = queryParams.get("key");
+		key = key === null ? "" : key;
 
-	let request =
-		getFirebaseUrl() +
-		`findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
-	var xhttp = new XMLHttpRequest();
-	xhttp.addEventListener("load", guestRequestDone);
-	xhttp.addEventListener("error", rsvpLoadError);
-	xhttp.addEventListener("abort", rsvpLoadError);
-	xhttp.open("GET", request, true);
-	xhttp.send();
-
-	return false;
+		let request =
+			getFirebaseUrl() +
+			`findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+		var xhttp = new XMLHttpRequest();
+		xhttp.addEventListener("load", guestRequestDone);
+		xhttp.addEventListener("error", rsvpLoadError);
+		xhttp.addEventListener("abort", rsvpLoadError);
+		xhttp.open("GET", request, true);
+		xhttp.send();
+	} catch (error) {
+		console.log(error);
+	} finally {
+		return false;
+	}
 }
 
 function rsvpLoadError() {
@@ -62,6 +67,7 @@ function parseResponseType(response) {
 function chooseFamilyForm(response) {
 	setFormState("choose-family");
 	let familyItemsNode = document.querySelector("#family-items");
+	familyItemsNode.innerHTML = "";
 
 	response.forEach((family, index) => {
 		let itemNode = buildFamilyItem(family, index);
@@ -92,14 +98,19 @@ function buildFamilyItem(family, index) {
 }
 
 function RSVPChooseFamily() {
-	let selectedFamilyId = document.querySelector(
-		"#choose-family-form input:checked"
-	).id;
-	let index = selectedFamilyId.slice(selectedFamilyId.length - 1);
-	index = parseInt(index);
+	try {
+		let selectedFamilyId = document.querySelector(
+			"#choose-family-form input:checked"
+		).id;
+		let index = selectedFamilyId.slice(selectedFamilyId.length - 1);
+		index = parseInt(index);
 
-	parseResponseType([QUERY_RESPONSE[index]]);
-	return false;
+		parseResponseType([QUERY_RESPONSE[index]]);
+	} catch (error) {
+		console.log(error);
+	} finally {
+		return false;
+	}
 }
 
 /**
@@ -162,6 +173,7 @@ function setFamilyForm(response) {
 	const family = response.family;
 	const menu = response.menu;
 	let familyMembersNode = document.querySelector("#family-members");
+	familyMembersNode.innerHTML = "";
 
 	setFormState("family");
 	setFamilyName(family.name);
@@ -244,6 +256,7 @@ function buildMenu(item, index, choice) {
 
 function RSVPSubmitFamily() {
 	try {
+		displayRsvpLoadingOverlay();
 		let familyMmeberNodes = document.querySelectorAll(
 			"#family-info-form .family-member"
 		);
@@ -256,14 +269,6 @@ function RSVPSubmitFamily() {
 		$.post(url, { members })
 			.done(RSVPSubmitFamilySuccess)
 			.fail(RSVPSubmitFamilyFailure);
-
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: url,
-		// 	data: members,
-		// 	success: RSVPSubmitFamilySuccess,
-		// 	dataType: RSVPSubmitFamilyFailure
-		// });
 	} catch (error) {
 		console.log(error);
 	} finally {
@@ -298,11 +303,14 @@ function getFoodChoice(node) {
 }
 
 function RSVPSubmitFamilySuccess() {
-	alert("Success!");
+	setFormState("guest");
+	setRsvpSuccessState();
+	hideRsvpLoadingOverlay();
 }
 
 function RSVPSubmitFamilyFailure() {
-	alert("Failure:(");
+	setRsvpErrorState();
+	hideRsvpLoadingOverlay();
 }
 
 // #endregion
@@ -329,6 +337,16 @@ function clearRsvpErrorState() {
 function setRsvpErrorState() {
 	const rsvpContent = document.querySelector("#RSVP .form");
 	rsvpContent.classList.add("error");
+}
+
+function clearRsvpSuccessState() {
+	const rsvpContent = document.querySelector("#RSVP .form");
+	rsvpContent.classList.remove("success");
+}
+
+function setRsvpSuccessState() {
+	const rsvpContent = document.querySelector("#RSVP .form");
+	rsvpContent.classList.add("success");
 }
 
 function setFormState(state) {
