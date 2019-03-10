@@ -36,7 +36,7 @@ exports.findGuest = functions.https.onRequest((request, response) => {
 });
 
 function validateRequest(request, response, requestCallback) {
-	const key = request.query.key;
+	const key = request.query.key || request.body.key;
 
 	if (key) {
 		let keyRef = DB.collection("keys").doc(key);
@@ -195,20 +195,24 @@ function returnError(error, response, errorCode) {
 
 exports.saveGuests = functions.https.onRequest((request, response) => {
 	response.set("Access-Control-Allow-Origin", "*"); // allows CORS TODO: allow only github pages?
-	trySaveRequest(request, response);
+	validateRequest(request, response, trySaveRequest);
 });
 
-function trySaveRequest(request, response) {
-	let promises = request.body.members.map(
-		guest =>
-			new Promise((resolve, reject) =>
-				trySaveGuest(guest, { resolve, reject })
-			)
-	);
+function trySaveRequest(request, response, writePermission) {
+	if (!writePermission) {
+		response.send("insufficient write permissions");
+	} else {
+		let promises = request.body.members.map(
+			guest =>
+				new Promise((resolve, reject) =>
+					trySaveGuest(guest, { resolve, reject })
+				)
+		);
 
-	Promise.all(promises)
-		.then(results => response.send("success"))
-		.catch(error => returnError(error, response, "301"));
+		Promise.all(promises)
+			.then(results => response.send("success"))
+			.catch(error => returnError(error, response, "301"));
+	}
 }
 
 function trySaveGuest(guest, promise) {

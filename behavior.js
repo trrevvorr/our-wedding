@@ -10,13 +10,10 @@ function RSVPSubmitGuest() {
 		const form = document.querySelector("#guest-info-form");
 		const firstName = form.querySelector("#first-name-field").value;
 		const lastName = form.querySelector("#last-name-field").value;
-		let queryParams = new URLSearchParams(window.location.search);
-		let key = queryParams.get("key");
-		key = key === null ? "" : key;
 
 		let request =
 			getFirebaseUrl() +
-			`findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
+			`findGuest?firstName=${firstName}&lastName=${lastName}&key=${getKey()}`;
 		var xhttp = new XMLHttpRequest();
 		xhttp.addEventListener("load", guestRequestDone);
 		xhttp.addEventListener("error", rsvpLoadError);
@@ -266,7 +263,7 @@ function RSVPSubmitFamily() {
 		);
 		let url = getFirebaseUrl() + "saveGuests";
 
-		$.post(url, { members })
+		$.post(url, { members, key: getKey() })
 			.done(RSVPSubmitFamilySuccess)
 			.fail(RSVPSubmitFamilyFailure);
 	} catch (error) {
@@ -377,5 +374,12 @@ function getFirebaseUrl() {
 		url = `http://localhost:5000/nancy-trevor-wedding/us-central1/`;
 	}
 	return url;
+}
+
+function getKey() {
+	let queryParams = new URLSearchParams(window.location.search);
+	let key = queryParams.get("key");
+	key = key === null ? "" : key;
+	return key;
 }
 // #endregion
