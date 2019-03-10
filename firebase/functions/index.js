@@ -16,7 +16,7 @@ responseModel = {
 	family: {
 		name: "Example Name",
 		members: [
-			{ firstName, lastName, attending, food, plusOne, },
+			{ firstName, lastName, attending, food, plusOne, id },
 			...
 		],
 	},
@@ -143,7 +143,8 @@ function addFamilyMembers(memberDocs, responseModel, promise) {
 		lastName: memberDoc.get("lastName"),
 		food: memberDoc.get("food").id,
 		attending: memberDoc.get("attending"),
-		plusOne: memberDoc.get("plusOne")
+		plusOne: memberDoc.get("plusOne"),
+		id: memberDoc.id
 	}));
 
 	getMenu(responseModel, promise);
@@ -189,3 +190,60 @@ function returnError(error, response, errorCode) {
 // http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=sandy&lastName=ross
 
 //#endregion
+
+// #region saveGuests Query
+
+exports.saveGuests = functions.https.onRequest((request, response) => {
+	response.set("Access-Control-Allow-Origin", "*"); // allows CORS TODO: allow only github pages?
+	trySaveRequest(request, response);
+});
+
+function trySaveRequest(request, response) {
+	let promises = request.body.members.map(
+		guest =>
+			new Promise((resolve, reject) =>
+				trySaveGuest(guest, { resolve, reject })
+			)
+	);
+
+	Promise.all(promises)
+		.then(results => response.send("success"))
+		.catch(error => returnError(error, response, "301"));
+}
+
+function trySaveGuest(guest, promise) {
+	let guestRef = DB.collection("guests").doc(guest.id);
+	guestRef
+		.get()
+		.then(guestDoc => {
+			if (!guestDoc.exists) {
+				promise.reject(`ID ${guest.id} not found`);
+			} else {
+				saveGuest(guest, guestDoc, guestRef);
+				promise.resolve(guestDoc);
+			}
+			return;
+		})
+		.catch(error => promise.reject(error));
+}
+
+function saveGuest(guest, guestDoc, guestRef) {
+	let dataToSet = {
+		attending: guest.attending === "true",
+		food: DB.collection("menu").doc(guest.food)
+	};
+
+	// add first and last name if this is a plus one
+	if (guestDoc.get("plusOne")) {
+		if (guest.firstName) {
+			dataToSet.firstName = guest.firstName;
+		}
+		if (guest.lastName) {
+			dataToSet.lastName = guest.lastName;
+		}
+	}
+
+	guestRef.update(dataToSet);
+}
+
+// #endregion

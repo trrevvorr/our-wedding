@@ -11,14 +11,10 @@ function RSVPSubmitGuest() {
 	let queryParams = new URLSearchParams(window.location.search);
 	let key = queryParams.get("key");
 	key = key === null ? "" : key;
-	let useFirebaseServe = queryParams.get("useServe");
 
-	// user local firebase serve for local testing
-	let request = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
-	if (useFirebaseServe) {
-		request = `http://localhost:5000/nancy-trevor-wedding/us-central1/findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
-	}
-
+	let request =
+		getFirebaseUrl() +
+		`findGuest?firstName=${firstName}&lastName=${lastName}&key=${key}`;
 	var xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("load", guestRequestDone);
 	xhttp.addEventListener("error", rsvpLoadError);
@@ -117,8 +113,18 @@ function RSVPChooseFamily() {
  * @param {string} name set as node's name, used for radios
  * @param {bool} disabled set as node's disabled state, used for all input types
  * @param {string} textContent set as node's textContent, used for labels of all input types
+ * @param {string} dataId set as node's data-id, used for input id reference
  */
-function setField(node, id, value, checked, name, disabled, textContent) {
+function setField(
+	node,
+	id,
+	value,
+	checked,
+	name,
+	disabled,
+	textContent,
+	dataId
+) {
 	let label = node.querySelector("label");
 	if (typeof id !== "undefined") {
 		label.setAttribute("for", id);
@@ -142,6 +148,9 @@ function setField(node, id, value, checked, name, disabled, textContent) {
 	}
 	if (typeof disabled !== "undefined") {
 		input.disabled = disabled;
+	}
+	if (typeof dataId !== "undefined") {
+		input.setAttribute("data-id", dataId);
 	}
 }
 
@@ -171,6 +180,9 @@ function buildFamilyMember(familyMember, menu, index) {
 		document.querySelector("#family-member-template").content,
 		true
 	);
+
+	// family member
+	memberNode.querySelector(".family-member").id = familyMember.id;
 
 	// guest name field
 	setField(
@@ -223,10 +235,74 @@ function buildMenu(item, index, choice) {
 		choice === item.id,
 		"menu-item-" + index,
 		undefined,
-		item.title
+		item.title,
+		item.id
 	);
 
 	return menItemNode;
+}
+
+function RSVPSubmitFamily() {
+	try {
+		let familyMmeberNodes = document.querySelectorAll(
+			"#family-info-form .family-member"
+		);
+
+		let members = Array.from(familyMmeberNodes).map(node =>
+			getFamilyMember(node)
+		);
+		let url = getFirebaseUrl() + "saveGuests";
+
+		$.post(url, { members })
+			.done(RSVPSubmitFamilySuccess)
+			.fail(RSVPSubmitFamilyFailure);
+
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: url,
+		// 	data: members,
+		// 	success: RSVPSubmitFamilySuccess,
+		// 	dataType: RSVPSubmitFamilyFailure
+		// });
+	} catch (error) {
+		console.log(error);
+	} finally {
+		return false;
+	}
+}
+
+function getFamilyMember(node) {
+	let id = node.id;
+	let { firstName, lastName } = getName(node);
+	let attending = getAttending(node);
+	let food = getFoodChoice(node);
+	return { id, firstName, lastName, attending, food };
+}
+
+function getName(node) {
+	let name = node.querySelector(".guest-name input").value;
+	name = name.trim();
+	let names = name.split(" ");
+	let firstName = names.length > 0 ? names[0] : "";
+	let lastName = names.length > 1 ? names[1] : "";
+
+	return { firstName, lastName };
+}
+
+function getAttending(node) {
+	return node.querySelector(".accept-radio input").checked;
+}
+
+function getFoodChoice(node) {
+	return node.querySelector(".menu input:checked").getAttribute("data-id");
+}
+
+function RSVPSubmitFamilySuccess() {
+	alert("Success!");
+}
+
+function RSVPSubmitFamilyFailure() {
+	alert("Failure:(");
 }
 
 // #endregion
@@ -263,3 +339,17 @@ function setFormState(state) {
 }
 
 //#endregion
+
+// #region shared
+
+function getFirebaseUrl() {
+	let queryParams = new URLSearchParams(window.location.search);
+	let useFirebaseServe = queryParams.get("useServe");
+	// user local firebase serve for local testing
+	let url = `https://us-central1-nancy-trevor-wedding.cloudfunctions.net/`;
+	if (useFirebaseServe) {
+		url = `http://localhost:5000/nancy-trevor-wedding/us-central1/`;
+	}
+	return url;
+}
+// #endregion
