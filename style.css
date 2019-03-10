@@ -502,6 +502,11 @@ fieldset {
 	background-image: url("images/section_header_registry.jpg");
 }
 
+#registry .content {
+	display: grid;
+	grid-gap: 1rem;
+}
+
 .section .title {
 	font-size: 2.5rem;
 	padding: 1.5rem 1rem;
