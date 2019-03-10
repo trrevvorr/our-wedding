@@ -101,8 +101,13 @@
 							<h3>Choose Your Family</h3>
 							<fieldset id="family-items">
 							</fieldset>
-							<div class="submit">
-								<input type="submit" id="choose-family-submit" value="CONTINUE">
+							<div class="buttons">
+								<span class="cancel">
+									<input type="button" value="CANCEL" onclick="resetRsvpForm();">
+								</span>
+								<span class="submit">
+									<input type="submit" id="choose-family-submit" value="CONTINUE">
+								</span>
 							</div>
 						</form>
 						<form class="form" id="family-info-form" onsubmit="return RSVPSubmitFamily();">
@@ -119,8 +124,13 @@
 							<h3 id="family-title">Your Family</h3>
 							<div id="family-members">
 							</div>
-							<div class="submit">
-								<input type="submit" id="family-info-submit" value="SUBMIT">
+							<div class="buttons">
+								<span class="cancel">
+									<input type="button" value="CANCEL" onclick="resetRsvpForm();">
+								</span>
+								<span class="submit">
+									<input type="submit" id="family-info-submit" value="SUBMIT">
+								</span>
 							</div>
 						</form>
 					</div>

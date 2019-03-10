@@ -303,9 +303,8 @@ function getFoodChoice(node) {
 }
 
 function RSVPSubmitFamilySuccess() {
-	setFormState("guest");
+	resetRsvpForm();
 	setRsvpSuccessState();
-	hideRsvpLoadingOverlay();
 }
 
 function RSVPSubmitFamilyFailure() {
@@ -354,6 +353,15 @@ function setFormState(state) {
 	rsvpContent.classList.remove(CURR_RSVP_STATE);
 	CURR_RSVP_STATE = state;
 	rsvpContent.classList.add(CURR_RSVP_STATE);
+}
+
+function resetRsvpForm() {
+	clearRsvpSuccessState();
+	clearRsvpErrorState();
+	document.querySelector("#first-name-field").value = "";
+	document.querySelector("#last-name-field").value = "";
+	hideRsvpLoadingOverlay();
+	setFormState("guest");
 }
 
 //#endregion
