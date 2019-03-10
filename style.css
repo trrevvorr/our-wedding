@@ -247,6 +247,7 @@ input[type="text"] {
 	/* 16px width of fake checkbox + 6px distance between fake checkbox and text */
 	padding-left: 22px;
 	font-size: 0.85rem;
+	text-transform: capitalize;
 }
 
 .radio label::before,

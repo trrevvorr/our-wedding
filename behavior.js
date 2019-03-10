@@ -194,10 +194,13 @@ function buildFamilyMember(familyMember, menu, index) {
 	memberNode.querySelector(".family-member").id = familyMember.id;
 
 	// guest name field
+	let firstName = familyMember.firstName ? familyMember.firstName : "";
+	let lastName = familyMember.lastName ? familyMember.lastName : "";
+	let fullName = firstName || lastName ? [firstName, lastName].join(" ") : "";
 	setField(
 		memberNode.querySelector(".guest-name"),
 		"guest-name-" + index,
-		familyMember.firstName + " " + familyMember.lastName,
+		fullName,
 		undefined,
 		undefined,
 		!familyMember.plusOne
@@ -213,11 +216,15 @@ function buildFamilyMember(familyMember, menu, index) {
 	);
 
 	// decline radio field
+	let notAttending =
+		typeof familyMember.attending === "undefined"
+			? undefined
+			: !familyMember.attending;
 	setField(
 		memberNode.querySelector(".decline-radio"),
 		"decline-" + index,
 		undefined,
-		!familyMember.attending,
+		notAttending,
 		"attending-radio-" + index
 	);
 

@@ -141,7 +141,7 @@ function addFamilyMembers(memberDocs, responseModel, promise) {
 	responseModel.family.members = memberDocs.map(memberDoc => ({
 		firstName: memberDoc.get("firstName"),
 		lastName: memberDoc.get("lastName"),
-		food: memberDoc.get("food").id,
+		food: memberDoc.get("food") && memberDoc.get("food").id,
 		attending: memberDoc.get("attending"),
 		plusOne: memberDoc.get("plusOne"),
 		id: memberDoc.id
@@ -240,10 +240,10 @@ function saveGuest(guest, guestDoc, guestRef) {
 	// add first and last name if this is a plus one
 	if (guestDoc.get("plusOne")) {
 		if (guest.firstName) {
-			dataToSet.firstName = guest.firstName;
+			dataToSet.firstName = guest.firstName.toLowerCase();
 		}
 		if (guest.lastName) {
-			dataToSet.lastName = guest.lastName;
+			dataToSet.lastName = guest.lastName.toLowerCase();
 		}
 	}
 
