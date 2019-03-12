@@ -267,6 +267,10 @@ function buildMenu(item, index, choice) {
 	return menItemNode;
 }
 
+// #endregion
+
+// #region RSVPSubmitFamily
+
 function RSVPSubmitFamily() {
 	try {
 		displayRsvpLoadingOverlay();
