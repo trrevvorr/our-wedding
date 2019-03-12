@@ -1,4 +1,10 @@
+// #region globals
+
 let QUERY_RESPONSE = [];
+const ACCEPT_KEY = "accept";
+const DECLINE_KEY = "decline";
+
+// #endregion
 
 // #region RSVPSubmitGuest
 
@@ -81,15 +87,11 @@ function buildFamilyItem(family, index) {
 	);
 
 	// menu-item radio field
-	setField(
-		familyItemNode.querySelector(".family-item"),
-		"family-item-" + index,
-		undefined,
-		undefined,
-		undefined,
-		undefined,
-		family.name
-	);
+	setField({
+		node: familyItemNode.querySelector(".family-item"),
+		id: "family-item-" + index,
+		textContent: family.name
+	});
 
 	return familyItemNode;
 }
@@ -112,27 +114,32 @@ function RSVPChooseFamily() {
 
 /**
  * sets data on passed in field such as id, value, etc.
- * @param node dom input node to set data on,
+ * @param {Object} params input parameter object
+ * @param {Object} params.node DOM input node to set data on,
  * 				should be one of input type = text, radio, etc.
  * 				should have a single input child and a single label child
- * @param {string} id set as node's ID, should be unique to DOM
- * @param {string} value set as node's value, used primarily for text in text fields
- * @param {bool} checked set as node's checked state, used for checkboxes and radios
- * @param {string} name set as node's name, used for radios
- * @param {bool} disabled set as node's disabled state, used for all input types
- * @param {string} textContent set as node's textContent, used for labels of all input types
- * @param {string} dataId set as node's data-id, used for input id reference
+ * @param {string} params.id set as input's `id` attribute (and label's `for` attribute), should be unique to DOM
+ * @param {string} [params.value] set as input's `value` attribute, used primarily for text in text fields
+ * @param {boolean} [params.checked] set as input's `checked` state, used for checkboxes and radios
+ * @param {string} [params.name] set as input's name, used for radios
+ * @param {boolean} [params.disabled] set as input's `disabled` state, used for all input types
+ * @param {string} [params.textContent] set as label's `textContent` attribute, used for labels of all input types
+ * @param {string} [params.dataId] set as input's `data-id` attribute, used for input id reference
+ * @param {function} [params.onChange] set as input's `onChange` callback
  */
-function setField(
-	node,
-	id,
-	value,
-	checked,
-	name,
-	disabled,
-	textContent,
-	dataId
-) {
+function setField(params) {
+	const {
+		node,
+		id,
+		value,
+		checked,
+		name,
+		disabled,
+		textContent,
+		dataId,
+		onChange
+	} = params;
+
 	let label = node.querySelector("label");
 	if (typeof id !== "undefined") {
 		label.setAttribute("for", id);
@@ -159,6 +166,9 @@ function setField(
 	}
 	if (typeof dataId !== "undefined") {
 		input.setAttribute("data-id", dataId);
+	}
+	if (typeof onChange !== "undefined") {
+		input.addEventListener("change", onChange);
 	}
 }
 
@@ -189,6 +199,7 @@ function buildFamilyMember(familyMember, menu, index) {
 		document.querySelector("#family-member-template").content,
 		true
 	);
+	let isAttending = familyMember.attending;
 
 	// family member
 	memberNode.querySelector(".family-member").id = familyMember.id;
@@ -197,42 +208,42 @@ function buildFamilyMember(familyMember, menu, index) {
 	let firstName = familyMember.firstName ? familyMember.firstName : "";
 	let lastName = familyMember.lastName ? familyMember.lastName : "";
 	let fullName = firstName || lastName ? [firstName, lastName].join(" ") : "";
-	setField(
-		memberNode.querySelector(".guest-name"),
-		"guest-name-" + index,
-		fullName,
-		undefined,
-		undefined,
-		!familyMember.plusOne
-	);
+	setField({
+		node: memberNode.querySelector(".guest-name"),
+		id: "guest-name-" + index,
+		value: fullName,
+		disabled: !familyMember.plusOne
+	});
 
 	// accept radio field
-	setField(
-		memberNode.querySelector(".accept-radio"),
-		"accept-" + index,
-		undefined,
-		familyMember.attending,
-		"attending-radio-" + index
-	);
+	setField({
+		node: memberNode.querySelector(".accept-radio"),
+		id: "accept-" + index,
+		checked: isAttending,
+		name: "attending-radio-" + index,
+		onChange: onAttendanceChange,
+		value: ACCEPT_KEY
+	});
 
 	// decline radio field
 	let notAttending =
-		typeof familyMember.attending === "undefined"
-			? undefined
-			: !familyMember.attending;
-	setField(
-		memberNode.querySelector(".decline-radio"),
-		"decline-" + index,
-		undefined,
-		notAttending,
-		"attending-radio-" + index
-	);
+		typeof isAttending === "undefined" ? undefined : !isAttending;
+	setField({
+		node: memberNode.querySelector(".decline-radio"),
+		id: "decline-" + index,
+		checked: notAttending,
+		name: "attending-radio-" + index,
+		onChange: onAttendanceChange,
+		value: DECLINE_KEY
+	});
 
 	// menu radios
 	let menuNode = memberNode.querySelector("fieldset.menu");
 	menu.forEach(item => {
 		menuNode.appendChild(buildMenu(item, index, familyMember.food));
 	});
+
+	setFamilyMemberState(memberNode, isAttending);
 
 	return memberNode;
 }
@@ -244,16 +255,14 @@ function buildMenu(item, index, choice) {
 	);
 
 	// menu-item radio field
-	setField(
-		menItemNode.querySelector(".menu-item"),
-		item.id + "-" + index,
-		undefined,
-		choice === item.id,
-		"menu-item-" + index,
-		undefined,
-		item.title,
-		item.id
-	);
+	setField({
+		node: menItemNode.querySelector(".menu-item"),
+		id: item.id + "-" + index,
+		checked: choice === item.id,
+		name: "menu-item-" + index,
+		textContent: item.title,
+		dataId: item.id
+	});
 
 	return menItemNode;
 }
@@ -303,7 +312,12 @@ function getAttending(node) {
 }
 
 function getFoodChoice(node) {
-	return node.querySelector(".menu input:checked").getAttribute("data-id");
+	let foodChoice = node.querySelector(".menu input:checked");
+	if (foodChoice) {
+		return foodChoice.getAttribute("data-id");
+	} else {
+		return "";
+	}
 }
 
 function RSVPSubmitFamilySuccess() {
@@ -369,6 +383,28 @@ function resetRsvpForm() {
 }
 
 //#endregion
+
+// #region attendance status change handlers
+
+function onAttendanceChange(event) {
+	let changedRadio = event.target;
+	let familyMemberNode = changedRadio.closest(".family-member");
+	const isAttending = changedRadio.value === ACCEPT_KEY;
+
+	setFamilyMemberState(familyMemberNode, isAttending);
+}
+
+function setFamilyMemberState(familyMemberNode, isAttending) {
+	// name is required if guest is attending
+	familyMemberNode.querySelector(".guest-name input").required = isAttending;
+
+	// set disabled state for each menu item
+	familyMemberNode.querySelectorAll(".menu-item input").forEach(item => {
+		item.disabled = !isAttending;
+	});
+}
+
+// #endregion
 
 // #region shared
 

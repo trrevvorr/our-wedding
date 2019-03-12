@@ -233,9 +233,12 @@ function trySaveGuest(guest, promise) {
 
 function saveGuest(guest, guestDoc, guestRef) {
 	let dataToSet = {
-		attending: guest.attending === "true",
-		food: DB.collection("menu").doc(guest.food)
+		attending: guest.attending === "true"
 	};
+
+	if (guest.food) {
+		dataToSet.food = DB.collection("menu").doc(guest.food);
+	}
 
 	// add first and last name if this is a plus one
 	if (guestDoc.get("plusOne")) {

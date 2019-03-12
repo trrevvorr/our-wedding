@@ -258,8 +258,7 @@ input[type="text"] {
 	display: inline-block;
 }
 
-/*Outer box of the fake checkbox*/
-
+/* Outer box of the fake checkbox */
 .radio label::before {
 	height: 1rem;
 	width: 1rem;
@@ -272,15 +271,18 @@ input[type="text"] {
 }
 
 /* Hide the checkmark by default */
-
 .radio input[type="radio"]+label::after {
 	content: none;
 }
 
 /* Unhide on the checked state */
-
 .radio input[type="radio"]:checked+label::before {
 	content: "X";
+}
+
+/* make disabled radios slightly lighter - label must immediately follow input */
+form .radio input:disabled+label {
+	opacity: 0.5;
 }
 
 /* #endregion */
