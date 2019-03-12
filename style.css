@@ -1,12 +1,14 @@
+:root {
+	--theme-dark: #360b15;
+	--theme-dark-2: rgb(89, 55, 59);
+	--theme-light: #EAE4D4;
+}
+
 body {
 	margin: 0;
 	padding: 0;
-	background-color: #AFB3A5;
-	background-color: #819DA0;
-	background-color: #66454E;
-	background-color: #360B15;
-	background-color: #EAE4D4;
-	color: #360b15;
+	background-color: var(--theme-light);
+	color: var(--theme-dark);
 	font-family: 'Hind Madurai', sans-serif;
 }
 
@@ -29,9 +31,9 @@ input[type=submit] {
 	padding: 0.75rem 2rem;
 	font-size: 1rem;
 	line-height: 1rem;
-	background-color: rgb(89, 55, 59);
+	background-color: var(--theme-dark-2);
 	border: none;
-	color: #EAE4D4;
+	color: var(--theme-light);
 	cursor: pointer;
 	text-transform: capitalize;
 	cursor: pointer;
@@ -43,8 +45,8 @@ input[type=button] {
 	font-size: 1rem;
 	line-height: 1rem;
 	background-color: transparent;
-	border: 1px solid rgb(89, 55, 59);
-	color: rgb(89, 55, 59);
+	border: 1px solid var(--theme-dark-2);
+	color: var(--theme-dark-2);
 	cursor: pointer;
 	text-transform: capitalize;
 	cursor: pointer;
@@ -208,8 +210,8 @@ input[type="text"] {
 	width: 100%;
 	background-color: transparent;
 	border: none;
-	border-bottom: 0.5px solid #360B15;
-	color: #360B15;
+	border-bottom: 0.5px solid var(--theme-dark);
+	color: var(--theme-dark);
 	font-size: 1.5rem;
 	height: 1.5rem;
 	max-width: 14rem;
@@ -263,7 +265,7 @@ input[type="text"] {
 	height: 1rem;
 	width: 1rem;
 	line-height: 1rem;
-	border-bottom: 0.5px solid #360b15;
+	border-bottom: 0.5px solid var(--theme-dark);
 	left: 0px;
 	top: 0px;
 	font-family: 'Dancing Script', cursive;
@@ -338,7 +340,7 @@ fieldset {
 	grid-template-columns: 100%;
 	background-color: rgba(54, 11, 21, 0.35);
 	height: 100%;
-	color: #EAE4D4;
+	color: var(--theme-light);
 }
 
 .nav-bar {
@@ -355,7 +357,7 @@ fieldset {
 	font-size: 1rem;
 	padding: 1rem 0;
 	width: 18%;
-	color: #EAE4D4;
+	color: var(--theme-light);
 }
 
 .header {
@@ -416,7 +418,7 @@ fieldset {
 
 .section .title-background {
 	width: 100%;
-	background-color: #360B15;
+	background-color: var(--theme-dark);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -513,7 +515,7 @@ fieldset {
 	font-size: 2.5rem;
 	padding: 1.5rem 1rem;
 	margin: 0;
-	color: #EAE4D4;
+	color: var(--theme-light);
 }
 
 .section .content {
