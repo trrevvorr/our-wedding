@@ -435,7 +435,13 @@ fieldset {
 
 #wedding-info h3 {
 	margin: 0;
-	margin-bottom: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+#wedding-info p {
+	margin: 0;
+	padding: 0;
+	line-height: 1.25rem;
 }
 
 #wedding-info .subtitle {
@@ -448,7 +454,16 @@ fieldset {
 #wedding-info .item {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
-	grid-gap: 10px;
+	grid-gap: 20px;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+#wedding-info .item i {
+	font-weight: bold;
+	text-align: right;
+	font-size: 2rem;
+	opacity: 0.5;
 }
 
 #wedding-info .item .label {
@@ -457,7 +472,7 @@ fieldset {
 }
 
 #wedding-info .item .details {
-	text-align: right;
+	text-align: left;
 }
 
 /* #endregion */
