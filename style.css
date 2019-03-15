@@ -1,7 +1,7 @@
 :root {
 	--theme-dark: #360b15;
 	--theme-dark-2: rgb(89, 55, 59);
-	--theme-light: #EAE4D4;
+	--theme-light: #f8f4f3;
 }
 
 body {
@@ -16,8 +16,7 @@ body {
 
 /* #region text */
 
-h1,
-h2 {
+h1, h2 {
 	font-family: 'Dancing Script', cursive;
 	letter-spacing: 0px;
 }
@@ -98,14 +97,11 @@ img.image-link:hover {
 	position: relative;
 }
 
-.paper-stack,
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack, .paper-stack::before, .paper-stack::after {
 	box-shadow: 1px 1px 6px -1px #777;
 }
 
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack::before, .paper-stack::after {
 	content: "";
 	position: absolute;
 	height: 95%;
@@ -159,7 +155,6 @@ img.image-link:hover {
 	0% {
 		transform: rotate(0deg);
 	}
-
 	100% {
 		transform: rotate(360deg);
 	}
@@ -252,8 +247,7 @@ input[type="text"] {
 	text-transform: capitalize;
 }
 
-.radio label::before,
-.radio label::after {
+.radio label::before, .radio label::after {
 	position: absolute;
 	content: "";
 	/* Needed for the line-height to take effect */
@@ -261,6 +255,7 @@ input[type="text"] {
 }
 
 /* Outer box of the fake checkbox */
+
 .radio label::before {
 	height: 1rem;
 	width: 1rem;
@@ -273,16 +268,19 @@ input[type="text"] {
 }
 
 /* Hide the checkmark by default */
+
 .radio input[type="radio"]+label::after {
 	content: none;
 }
 
 /* Unhide on the checked state */
+
 .radio input[type="radio"]:checked+label::before {
 	content: "X";
 }
 
 /* make disabled radios slightly lighter - label must immediately follow input */
+
 form .radio input:disabled+label {
 	opacity: 0.5;
 }
@@ -390,7 +388,6 @@ fieldset {
 	from {
 		transform: translateY(0px) rotate(90deg);
 	}
-
 	to {
 		transform: translateY(-10px) rotate(90deg);
 	}
@@ -434,6 +431,8 @@ fieldset {
 	background-image: url("images/section_header_flowers.png");
 }
 
+/* #region: RSVP */
+
 #RSVP .title-background {
 	background-image: url("images/section_header_stationary.jpg");
 }
@@ -444,8 +443,7 @@ fieldset {
 	width: 100%;
 }
 
-#RSVP .family-member-labels,
-#RSVP .family-member {
+#RSVP .family-member-labels, #RSVP .family-member {
 	display: grid;
 	/* grid-template-columns: 1fr 2fr 2fr 2fr; */
 	grid-gap: 1rem;
@@ -473,25 +471,32 @@ fieldset {
 	margin: 0;
 }
 
-#RSVP .outer-content.guest #family-info-form,
-#RSVP .outer-content.choose-family #family-info-form {
+#RSVP .outer-content.guest #family-info-form, #RSVP .outer-content.choose-family #family-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #guest-info-form,
-#RSVP .outer-content.choose-family #guest-info-form {
+#RSVP .outer-content.family #guest-info-form, #RSVP .outer-content.choose-family #guest-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #choose-family-form,
-#RSVP .outer-content.guest #choose-family-form {
+#RSVP .outer-content.family #choose-family-form, #RSVP .outer-content.guest #choose-family-form {
 	display: none;
 }
+
+/* #endregion */
+
+/* #region: About Us */
 
 #about-us .title-background {
 	background-image: url("images/section_header_about_us.jpg");
 	background-position: top;
 }
+
+#about-us .quote {
+	opacity: 0.75;
+}
+
+/* #endregion */
 
 #photos .title-background {
 	background-image: url("images/section_header_photos_cropped.PNG");
@@ -547,25 +552,20 @@ fieldset {
 		grid-template-columns: 3fr 2fr;
 		height: 100vh;
 	}
-
 	.scroll-for-more {
 		display: none;
 	}
-
 	.section {
 		margin-left: 2rem;
 		margin-right: 2rem;
 	}
-
 	.section .title-background {
 		border-radius: 4px;
 	}
-
 	.section .content {
 		margin-left: 0;
 		margin-right: 0;
 	}
-
 	.header .text {
 		font-size: 9vw;
 		margin: 0;
