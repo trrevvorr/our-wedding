@@ -352,8 +352,8 @@ fieldset {
 .nav-bar a {
 	display: inline-block;
 	text-decoration: none;
-	font-size: 1rem;
-	padding: 1rem 0;
+	font-size: 0.8rem;
+	padding: 0.8rem 0;
 	width: 18%;
 	color: var(--theme-light);
 }
@@ -431,6 +431,11 @@ fieldset {
 
 #wedding-info .title-background {
 	background-image: url("images/section_header_flowers.png");
+}
+
+#wedding-info .content {
+	display: grid;
+	grid-gap: 2rem;
 }
 
 #wedding-info h3 {
