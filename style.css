@@ -427,9 +427,40 @@ fieldset {
 	background-color: rgba(54, 11, 21, 0.75);
 }
 
+/* #region: Wedding Info */
+
 #wedding-info .title-background {
 	background-image: url("images/section_header_flowers.png");
 }
+
+#wedding-info h3 {
+	margin: 0;
+	margin-bottom: 0.5rem;
+}
+
+#wedding-info .subtitle {
+	font-weight: bold;
+	opacity: 0.5;
+	margin: 0;
+	margin-bottom: 0.5rem;
+}
+
+#wedding-info .item {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-gap: 10px;
+}
+
+#wedding-info .item .label {
+	font-weight: bold;
+	text-align: left;
+}
+
+#wedding-info .item .details {
+	text-align: right;
+}
+
+/* #endregion */
 
 /* #region: RSVP */
 
@@ -490,10 +521,6 @@ fieldset {
 #about-us .title-background {
 	background-image: url("images/section_header_about_us.jpg");
 	background-position: top;
-}
-
-#about-us .quote {
-	opacity: 0.75;
 }
 
 /* #endregion */
