@@ -389,10 +389,10 @@ fieldset {
 
 @keyframes bounce {
 	from {
-		transform: translateY(0px) rotate(90deg);
+		transform: translateY(-20px);
 	}
 	to {
-		transform: translateY(-10px) rotate(90deg);
+		transform: translateY(-30px);
 	}
 }
 
