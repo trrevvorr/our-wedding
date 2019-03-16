@@ -1,7 +1,9 @@
 :root {
 	--theme-dark: #360b15;
-	--theme-dark-2: rgb(89, 55, 59);
-	--theme-light: #EAE4D4;
+	--theme-dark-light: #66454E;
+	--theme-accent-1: #AFB3A5;
+	--theme-accent-2: #819DA0;
+	--theme-light: #f8f4f3;
 }
 
 body {
@@ -16,8 +18,7 @@ body {
 
 /* #region text */
 
-h1,
-h2 {
+h1, h2 {
 	font-family: 'Dancing Script', cursive;
 	letter-spacing: 0px;
 }
@@ -31,7 +32,7 @@ input[type=submit] {
 	padding: 0.75rem 2rem;
 	font-size: 1rem;
 	line-height: 1rem;
-	background-color: var(--theme-dark-2);
+	background-color: var(--theme-dark-light);
 	border: none;
 	color: var(--theme-light);
 	cursor: pointer;
@@ -45,8 +46,8 @@ input[type=button] {
 	font-size: 1rem;
 	line-height: 1rem;
 	background-color: transparent;
-	border: 1px solid var(--theme-dark-2);
-	color: var(--theme-dark-2);
+	border: 1px solid var(--theme-dark-light);
+	color: var(--theme-dark-light);
 	cursor: pointer;
 	text-transform: capitalize;
 	cursor: pointer;
@@ -98,14 +99,11 @@ img.image-link:hover {
 	position: relative;
 }
 
-.paper-stack,
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack, .paper-stack::before, .paper-stack::after {
 	box-shadow: 1px 1px 6px -1px #777;
 }
 
-.paper-stack::before,
-.paper-stack::after {
+.paper-stack::before, .paper-stack::after {
 	content: "";
 	position: absolute;
 	height: 95%;
@@ -159,7 +157,6 @@ img.image-link:hover {
 	0% {
 		transform: rotate(0deg);
 	}
-
 	100% {
 		transform: rotate(360deg);
 	}
@@ -252,8 +249,7 @@ input[type="text"] {
 	text-transform: capitalize;
 }
 
-.radio label::before,
-.radio label::after {
+.radio label::before, .radio label::after {
 	position: absolute;
 	content: "";
 	/* Needed for the line-height to take effect */
@@ -261,6 +257,7 @@ input[type="text"] {
 }
 
 /* Outer box of the fake checkbox */
+
 .radio label::before {
 	height: 1rem;
 	width: 1rem;
@@ -273,16 +270,19 @@ input[type="text"] {
 }
 
 /* Hide the checkmark by default */
+
 .radio input[type="radio"]+label::after {
 	content: none;
 }
 
 /* Unhide on the checked state */
+
 .radio input[type="radio"]:checked+label::before {
 	content: "X";
 }
 
 /* make disabled radios slightly lighter - label must immediately follow input */
+
 form .radio input:disabled+label {
 	opacity: 0.5;
 }
@@ -390,7 +390,6 @@ fieldset {
 	from {
 		transform: translateY(0px) rotate(90deg);
 	}
-
 	to {
 		transform: translateY(-10px) rotate(90deg);
 	}
@@ -407,17 +406,28 @@ fieldset {
 	justify-content: center;
 }
 
+/* #region sections */
+
 .section {
 	max-width: 28rem;
 	display: grid;
 }
 
 .section:first-child {
-	padding-top: 2rem;
+	padding-top: 1rem;
+}
+
+.section-header {
+	height: 9rem;
+	position: relative;
 }
 
 .section .title-background {
-	width: 100%;
+	width: 20rem;
+	height: 5rem;
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
 	background-color: var(--theme-dark);
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -426,12 +436,23 @@ fieldset {
 }
 
 .section .title-overlay {
-	height: 100%;
-	background-color: rgba(54, 11, 21, 0.75);
+	align-items: center;
+	height: 5rem;
+	width: 17rem;
+	position: absolute;
+	right: 1rem;
+	top: 3rem;
+	background-color: var(--theme-dark-light);
+	opacity: 0.95;
+	display: grid;
+	box-shadow: 0px 40px 108px -6px rgba(0,0,0,0.17);
 }
+
+/* #endregion */
 
 #wedding-info .title-background {
 	background-image: url("images/section_header_flowers.png");
+	box-shadow: 0px 40px 108px -80px rgba(0,0,0,0.17);
 }
 
 #RSVP .title-background {
@@ -444,8 +465,7 @@ fieldset {
 	width: 100%;
 }
 
-#RSVP .family-member-labels,
-#RSVP .family-member {
+#RSVP .family-member-labels, #RSVP .family-member {
 	display: grid;
 	/* grid-template-columns: 1fr 2fr 2fr 2fr; */
 	grid-gap: 1rem;
@@ -473,18 +493,15 @@ fieldset {
 	margin: 0;
 }
 
-#RSVP .outer-content.guest #family-info-form,
-#RSVP .outer-content.choose-family #family-info-form {
+#RSVP .outer-content.guest #family-info-form, #RSVP .outer-content.choose-family #family-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #guest-info-form,
-#RSVP .outer-content.choose-family #guest-info-form {
+#RSVP .outer-content.family #guest-info-form, #RSVP .outer-content.choose-family #guest-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #choose-family-form,
-#RSVP .outer-content.guest #choose-family-form {
+#RSVP .outer-content.family #choose-family-form, #RSVP .outer-content.guest #choose-family-form {
 	display: none;
 }
 
@@ -512,10 +529,12 @@ fieldset {
 }
 
 .section .title {
-	font-size: 2.5rem;
-	padding: 1.5rem 1rem;
+	font-size: 3rem;
+	padding: 0 1rem;
 	margin: 0;
 	color: var(--theme-light);
+	text-align: left;
+	line-height: 3.5rem;
 }
 
 .section .content {
@@ -547,25 +566,20 @@ fieldset {
 		grid-template-columns: 3fr 2fr;
 		height: 100vh;
 	}
-
 	.scroll-for-more {
 		display: none;
 	}
-
 	.section {
 		margin-left: 2rem;
 		margin-right: 2rem;
 	}
-
 	.section .title-background {
 		border-radius: 4px;
 	}
-
 	.section .content {
 		margin-left: 0;
 		margin-right: 0;
 	}
-
 	.header .text {
 		font-size: 9vw;
 		margin: 0;
