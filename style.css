@@ -1,8 +1,8 @@
 :root {
 	--theme-dark: #360b15;
-	--theme-dark-light: #66454E;
-	--theme-accent-1: #AFB3A5;
-	--theme-accent-2: #819DA0;
+	--theme-dark-light: #66454e;
+	--theme-accent-1: #afb3a5;
+	--theme-accent-2: #819da0;
 	--theme-light: #f8f4f3;
 }
 
@@ -11,15 +11,16 @@ body {
 	padding: 0;
 	background-color: var(--theme-light);
 	color: var(--theme-dark);
-	font-family: 'Hind Madurai', sans-serif;
+	font-family: "Hind Madurai", sans-serif;
 }
 
 /* #region shared */
 
 /* #region text */
 
-h1, h2 {
-	font-family: 'Dancing Script', cursive;
+h1,
+h2 {
+	font-family: "Dancing Script", cursive;
 	letter-spacing: 0px;
 	font-weight: 600;
 }
@@ -28,7 +29,7 @@ h3 {
 	font-size: 1rem;
 }
 
-input[type=submit] {
+input[type="submit"] {
 	margin-top: 1rem;
 	padding: 0.75rem 2rem;
 	font-size: 1rem;
@@ -41,7 +42,7 @@ input[type=submit] {
 	cursor: pointer;
 }
 
-input[type=button] {
+input[type="button"] {
 	margin-top: 1rem;
 	padding: 0.75rem 2rem;
 	font-size: 1rem;
@@ -100,11 +101,14 @@ img.image-link:hover {
 	position: relative;
 }
 
-.paper-stack, .paper-stack::before, .paper-stack::after {
+.paper-stack,
+.paper-stack::before,
+.paper-stack::after {
 	box-shadow: 1px 1px 6px -1px #777;
 }
 
-.paper-stack::before, .paper-stack::after {
+.paper-stack::before,
+.paper-stack::after {
 	content: "";
 	position: absolute;
 	height: 95%;
@@ -214,7 +218,7 @@ input[type="text"] {
 	font-size: 1.5rem;
 	height: 1.5rem;
 	max-width: 14rem;
-	font-family: 'Dancing Script', cursive;
+	font-family: "Dancing Script", cursive;
 	padding-left: 0.5rem;
 	width: calc(100% - 0.5rem);
 	text-transform: capitalize;
@@ -251,7 +255,8 @@ input[type="text"] {
 	text-transform: capitalize;
 }
 
-.radio label::before, .radio label::after {
+.radio label::before,
+.radio label::after {
 	position: absolute;
 	content: "";
 	/* Needed for the line-height to take effect */
@@ -267,25 +272,25 @@ input[type="text"] {
 	border-bottom: 0.5px solid var(--theme-dark);
 	left: 0px;
 	top: 0px;
-	font-family: 'Dancing Script', cursive;
+	font-family: "Dancing Script", cursive;
 	font-size: 1rem;
 }
 
 /* Hide the checkmark by default */
 
-.radio input[type="radio"]+label::after {
+.radio input[type="radio"] + label::after {
 	content: none;
 }
 
 /* Unhide on the checked state */
 
-.radio input[type="radio"]:checked+label::before {
+.radio input[type="radio"]:checked + label::before {
 	content: "X";
 }
 
 /* make disabled radios slightly lighter - label must immediately follow input */
 
-form .radio input:disabled+label {
+form .radio input:disabled + label {
 	opacity: 0.5;
 }
 
@@ -301,14 +306,14 @@ fieldset {
 
 /*Adding focus styles on the outer-box of the fake checkbox*/
 
-.radio input[type="radio"]:focus+label::before {
+.radio input[type="radio"]:focus + label::before {
 	outline-width: 2px;
 	outline-style: solid;
 	outline-color: Highlight;
 }
 
-@media (-webkit-min-device-pixel-ratio:0) {
-	.radio input[type="radio"]:focus+label::before {
+@media (-webkit-min-device-pixel-ratio: 0) {
+	.radio input[type="radio"]:focus + label::before {
 		outline-color: -webkit-focus-ring-color;
 		outline-style: auto;
 	}
@@ -503,8 +508,12 @@ fieldset {
 	text-align: left;
 }
 
-#wedding-info .item .details {
+.right #wedding-info .item .details {
 	text-align: left;
+}
+.right #wedding-info .item a.details {
+	color: var(--theme-dark);
+	display: block;
 }
 
 /* #endregion */
@@ -521,7 +530,8 @@ fieldset {
 	width: 100%;
 }
 
-#RSVP .family-member-labels, #RSVP .family-member {
+#RSVP .family-member-labels,
+#RSVP .family-member {
 	display: grid;
 	/* grid-template-columns: 1fr 2fr 2fr 2fr; */
 	grid-gap: 1rem;
@@ -549,15 +559,18 @@ fieldset {
 	margin: 0;
 }
 
-#RSVP .outer-content.guest #family-info-form, #RSVP .outer-content.choose-family #family-info-form {
+#RSVP .outer-content.guest #family-info-form,
+#RSVP .outer-content.choose-family #family-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #guest-info-form, #RSVP .outer-content.choose-family #guest-info-form {
+#RSVP .outer-content.family #guest-info-form,
+#RSVP .outer-content.choose-family #guest-info-form {
 	display: none;
 }
 
-#RSVP .outer-content.family #choose-family-form, #RSVP .outer-content.guest #choose-family-form {
+#RSVP .outer-content.family #choose-family-form,
+#RSVP .outer-content.guest #choose-family-form {
 	display: none;
 }
 
