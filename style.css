@@ -585,6 +585,8 @@ fieldset {
 
 /* #endregion */
 
+/* #region: Photos */
+
 #photos .title-background {
 	background-image: url("images/section_header_photos_cropped.PNG");
 }
@@ -594,6 +596,10 @@ fieldset {
 	margin-top: 1.5rem;
 }
 
+/* #endregion */
+
+/* #region: Registry */
+
 #registry .title-background {
 	background-image: url("images/section_header_registry.jpg");
 }
@@ -602,6 +608,8 @@ fieldset {
 	display: grid;
 	grid-gap: 1rem;
 }
+
+/* #endregion */
 
 .section .title {
 	font-size: 3rem;
