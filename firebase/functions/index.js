@@ -1,3 +1,4 @@
+// ensure firebase-tools are installed: `npm install -g firebase-tools`
 // deploy with `firebase deploy --only functions`
 // test with `firebase serve --only functions`
 
