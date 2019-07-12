@@ -557,6 +557,7 @@ fieldset {
 
 #RSVP #family-title {
 	margin: 0;
+	text-transform: capitalize;
 }
 
 #RSVP .outer-content.guest #family-info-form,
