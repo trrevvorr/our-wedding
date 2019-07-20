@@ -19,10 +19,12 @@ To see it in action: https://trrevvorr.github.io/our-wedding/?key=demo
 ### Setup
 - Install firestore import from npm: `npm i node-firestore-import-export`
 - initialize with firebase credentials: `export GOOGLE_APPLICATION_CREDENTIALS=path/to/my/credentials.json`
+- see [here] for more details
+
+### Backup
 - create a backup of your data by running: 
     - `firestore-export --backupFile ./import/backups/firebase-export-guests.json --nodePath guests -p`
     - `firestore-export --backupFile ./import/backups/firebase-export-families.json --nodePath families -p`
-- see [here] for more details
 
 ### Import
 CAUTION: the following commands will overwrite any data in `guests/` or `families/` with matching keys. Do a backup before proceeding.
