@@ -29,7 +29,7 @@ To see it in action: https://trrevvorr.github.io/our-wedding/?key=demo
 ### Import
 CAUTION: the following commands will overwrite any data in `guests/` or `families/` with matching keys. Do a backup before proceeding.
 
-1. populate `import/guests.json` with your guests' info
+1. populate `import/guests_to_import.json` with your guests' info
 1. run `node import/guests_to_families.js`
 1. run `firestore-import --backupFile ./import/out/guests.json --nodePath guests`
 1. run `firestore-import --backupFile ./import/out/families.json --nodePath families`
@@ -41,6 +41,10 @@ CAUTION: thie following commands will remove all `guests/` and `families/`. Do a
 1. clear all guests: `firestore-clear --nodePath families`
 
 ## Other
+
+### Get Attendance Counts
+1. Create a guests backup (see Backup section)
+1. Run `node import/countAttendance.js` script
 
 ### Poor Man's CSV to JSON
 Convert CSV to `guest_to_import.json` format JSON
